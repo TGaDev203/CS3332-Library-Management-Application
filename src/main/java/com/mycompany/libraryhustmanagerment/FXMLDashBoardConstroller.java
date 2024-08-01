@@ -256,8 +256,37 @@ public class FXMLDashBoardConstroller implements Initializable {
     @FXML
     private Button users_selectUser;
     
+    @FXML
+    private AnchorPane dasboard_form;
+    
+    @FXML
+    private void dasboard_form_close() {
+        System.exit(0);
+    }
+    @FXML
+    private void dasboard_form_minimize() {
+        Stage stage = (Stage)dasboard_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    @FXML
+    private void switchForm(ActionEvent event) throws IOException {
+        if(event.getSource() == managerBook_btn){
+            managerBook_form.setVisible(true);
+            borrowedBooks_form.setVisible(false);
+            users_form.setVisible(false);
+            
+        } else if(event.getSource() == borrowedBooks_btn) {
+            managerBook_form.setVisible(false);
+            borrowedBooks_form.setVisible(true);
+            users_form.setVisible(false);
+        } else if(event.getSource() == users_Btn) {
+            managerBook_form.setVisible(false);
+            borrowedBooks_form.setVisible(false);
+            users_form.setVisible(true);
+        }
+    }
     private void DisplayUser() {
-       login_username.setText("Hung");
+       login_username.setText("XH");
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
