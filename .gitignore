@@ -39,3 +39,6 @@ nbactions.xml
 
 # Local configuration files
 src/main/resources/db.properties
+
+# Temporary files
+*.tmp
