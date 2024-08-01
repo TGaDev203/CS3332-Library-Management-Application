@@ -1,4 +1,7 @@
+# Maven build output
 target/
+
+# Maven specific files
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -7,11 +10,32 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+
+# IDE-specific files
+.idea/
+.project
+.classpath
+.settings/
+nbactions.xml
 
 # Eclipse m2e generated files
 # Eclipse Core
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Compiled class files
+*.class
+
+# Backup and temporary files
+*~
+.DS_Store
+
+# Documentation and images
+*.docx
+*.jpg
+*.png
+
+# Local configuration files
+src/main/resources/db.properties
