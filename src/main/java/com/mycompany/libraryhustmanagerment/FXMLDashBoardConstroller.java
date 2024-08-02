@@ -406,12 +406,12 @@ public class FXMLDashBoardConstroller implements Initializable {
     
     private Book selectedBook = null;
     @FXML
-    private void SelectTicket() {
+    private void SelectBook() {
         selectedBook = managerBook_tableView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success!!!");
-        alert.setHeaderText("Selected ticket successfully!!!");
-        alert.setContentText("Ticket is selected: " + selectedBook.getBookTitle());
+        alert.setHeaderText("Selected Book successfully!!!");
+        alert.setContentText("Book is selected: " + selectedBook.getBookTitle());
         alert.showAndWait();
         SetValueForUpdateForm();
         System.out.print(selectedBook.getBookID());
@@ -458,7 +458,11 @@ public class FXMLDashBoardConstroller implements Initializable {
                     } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.print("Update");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success!!!");
+            alert.setHeaderText("Update Book successfully!!!");
+            alert.setContentText("Book is selected: " + selectedBook.getBookTitle());
+            alert.showAndWait();
         }
     }
 } 
