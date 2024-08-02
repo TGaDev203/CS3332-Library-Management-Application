@@ -172,6 +172,7 @@
                            <children>
                               <TableView fx:id="managerBook_tableView" layoutX="3.0" layoutY="66.0" onSort="#setValueForManagerBookTableView" prefHeight="407.0" prefWidth="658.0" styleClass="table-view" stylesheets="@designDashboard.css">
                                 <columns>
+<<<<<<< HEAD
                                   <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
                                   <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="79.0" text="Genre" />
                                     <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
@@ -180,6 +181,16 @@
                                     <TableColumn fx:id="managerBook_publicationDate" prefWidth="72.0" text="Public Date" />
                                     <TableColumn fx:id="managerBook_totalBookTable" prefWidth="69.0" text="Total Book" />
                                     <TableColumn fx:id="managerBook_availableBookTable" prefWidth="69.0" text="Available" />
+=======
+                                  <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="78.39996337890625" text="Book Title" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="61.5999755859375" text="Gerne" />
+                                    <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="61.5999755859375" text="BookID" />
+                                    <TableColumn fx:id="managerBook_authorTable" prefWidth="76.79998779296875" text="Authors" />
+                                    <TableColumn fx:id="managerBook_publisherTable" prefWidth="104.0" text="Publisher" />
+                                    <TableColumn fx:id="managerBook_publicationDate" prefWidth="100.0" text="Publication Date" />
+                                    <TableColumn fx:id="managerBook_totalBookTable" prefWidth="78.39990234375" text="Total Book" />
+                                    <TableColumn fx:id="managerBook_availableBookTable" prefWidth="96.79998779296875" text="Available Book" />
+>>>>>>> origin
                                 </columns>
                               </TableView>
                               <Button fx:id="managerBook_selectBookBtn" layoutX="335.0" layoutY="476.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="116.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Select Book">
