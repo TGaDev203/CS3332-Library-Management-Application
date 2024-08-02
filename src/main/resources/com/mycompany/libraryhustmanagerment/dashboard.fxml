@@ -128,7 +128,7 @@
                               </Label>
                               <DatePicker fx:id="managerBook_date" layoutX="111.0" layoutY="310.0" prefHeight="30.0" prefWidth="142.0" promptText="MM-DD-YYYY" styleClass="date" stylesheets="@designDashboard.css" />
                               <Button fx:id="managerBook_addBtn" layoutX="41.0" layoutY="371.0" mnemonicParsing="false" onAction="#AddBook" prefHeight="42.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Add" />
-                              <Button fx:id="managerBook_updateBtn" layoutX="150.0" layoutY="371.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update">
+                              <Button fx:id="managerBook_updateBtn" layoutX="150.0" layoutY="371.0" mnemonicParsing="false" onAction="#UpdateBook" prefHeight="42.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
                                        <stops>
@@ -146,7 +146,7 @@
                                     </LinearGradient>
                                  </textFill>
                               </Button>
-                              <Button fx:id="managerBook_resetBtn" layoutX="41.0" layoutY="434.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="77.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Reset" textFill="#c1cc76" />
+                              <Button fx:id="managerBook_resetBtn" layoutX="41.0" layoutY="434.0" mnemonicParsing="false" onAction="#ResetForm" prefHeight="42.0" prefWidth="77.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Reset" textFill="#c1cc76" />
                               <Button fx:id="managerBook_deleteBtn" layoutX="151.0" layoutY="434.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="77.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" textFill="#d97d75" />
                               <TextField fx:id="managerBook_publisherField" layoutX="113.0" layoutY="255.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
                               <Label layoutX="33.0" layoutY="264.0" prefHeight="16.0" prefWidth="62.0" text="Publisher:">
@@ -182,7 +182,7 @@
                                     <TableColumn fx:id="managerBook_availableBookTable" prefWidth="72.0" text="Available" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="managerBook_selectBookBtn" layoutX="335.0" layoutY="476.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="116.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Select Book">
+                              <Button fx:id="managerBook_selectBookBtn" layoutX="335.0" layoutY="476.0" mnemonicParsing="false" onAction="#SelectTicket" prefHeight="42.0" prefWidth="116.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Select Book">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
                                        <stops>
