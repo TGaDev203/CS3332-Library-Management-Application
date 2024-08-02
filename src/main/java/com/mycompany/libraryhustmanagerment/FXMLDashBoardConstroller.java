@@ -5,18 +5,23 @@
 package com.mycompany.libraryhustmanagerment;
 
 
+import com.mycompany.entities.BookEntity;
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date; // Ensure this import
+import java.time.LocalDate;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Book;
 
 /**
  * FXML Controller class
@@ -176,7 +182,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_genre;
 
     @FXML
-    private TableColumn<?, ?> managerBook_gerneTable;
+    private TableColumn<?, ?> managerBook_genreTable;
 
     @FXML
     private TableColumn<?, ?> managerBook_publicationDate;
@@ -209,7 +215,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button minimize_btn;
 
     @FXML
-    private TableView<?> selectTicket_tableView;
+    private TableView<Book> managerBook_tableView;
 
     @FXML
     private Button signout_btn;
@@ -285,12 +291,116 @@ public class FXMLDashBoardConstroller implements Initializable {
             users_form.setVisible(true);
         }
     }
+    @FXML
     private void DisplayUser() {
        login_username.setText("XH");
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DisplayUser();
+        try {
+            setValueForManagerBookTableView();
+                    } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+    private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
+        try {
+            if (!textField.getText().equals("")) {
+                return true;
+            } 
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error!!!");
+                alert.setHeaderText("Add Book Failure!!!");
+                alert.setContentText(nameOfObject + " not NULL, please try again!!!");
+                alert.showAndWait();
+                return false;
+            }
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Add Book Failure!!!");
+            alert.setContentText(nameOfObject + " not NULL, please try again!!!");
+            alert.showAndWait();
+            return false;
+        }
+    }
+    //! Function AddBook
+    @FXML
+    private void AddBook() {
+        String bookTitle = null;
+        //Check string is null or not
+        if(checkStringNotNULL("Book Title", managerBook_bookTitle)) {
+            bookTitle = managerBook_bookTitle.getText(); //if not will setvalue
+        }
+        String bookAuthor = null;
+        if(checkStringNotNULL("Book Author", managerBook_author)) {
+            bookAuthor = managerBook_author.getText();
+        }
+        Integer stock = null;
+        try {
+            if (Book.IsValidStock(managerBook_stock.getText())) {
+                stock = Integer.valueOf(managerBook_stock.getText());
+            } 
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error!!!");
+                alert.setHeaderText("Add Book Failure!!!");
+                alert.setContentText("Stock must be a positive point number, please try again!!!");
+                alert.showAndWait();
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!!!");
+            alert.setHeaderText("Add Book Failure!!!");
+            alert.setContentText("Stock must be a positive point number, please try again!!!");
+            alert.showAndWait();
+            return;
+        }
+        String genre = null;
+        if(checkStringNotNULL("Genre", managerBook_genre)) {
+            genre = managerBook_genre.getText();
+        }
+        String publisher = null;
+        if(checkStringNotNULL("Publisher", managerBook_publisherField)) {
+            publisher = managerBook_publisherField.getText();
+        }
+        LocalDate selectedDate = managerBook_date.getValue(); 
+        Date publicationDate = Date.valueOf(selectedDate);
+        
+        Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        BookEntity.AddBook(newBook);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!!!");
+        alert.setHeaderText("Book is added successfully!!!");
+        alert.setContentText("Book added is: " + newBook.getBookTitle());
+        alert.showAndWait();
+        managerBook_bookTitle.clear();
+        managerBook_author.clear();
+        managerBook_stock.clear();
+        managerBook_genre.clear();
+        managerBook_publisherField.clear();
+        managerBook_date.setValue(null);
+        try {
+            setValueForManagerBookTableView();
+                    } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    @FXML
+    private void setValueForManagerBookTableView() throws SQLException {
+        ObservableList<Book> bookDataList = BookEntity.GetDataBooks();
+        managerBook_bookTitleTable.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
+        managerBook_genreTable.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        managerBook_bookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
+        managerBook_authorTable.setCellValueFactory(new PropertyValueFactory<>("bookAuthor"));
+        managerBook_publisherTable.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        managerBook_publicationDate.setCellValueFactory(new PropertyValueFactory<>("publicationDate"));
+        managerBook_totalBookTable.setCellValueFactory(new PropertyValueFactory<>("totalBook"));
+        managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
+        managerBook_tableView.setItems(bookDataList);
+       
+    }
 } 
