@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Legion
  */
 public class BaseEntity {
-    private static final String DATABASE = "library_hust_managerment"; 
+    private static final String DATABASE = "library_hust_management"; 
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
     
