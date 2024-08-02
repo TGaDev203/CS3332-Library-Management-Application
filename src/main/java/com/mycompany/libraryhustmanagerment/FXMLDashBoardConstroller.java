@@ -401,6 +401,5 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_totalBookTable.setCellValueFactory(new PropertyValueFactory<>("totalBook"));
         managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
         managerBook_tableView.setItems(bookDataList);
-       
     }
 } 

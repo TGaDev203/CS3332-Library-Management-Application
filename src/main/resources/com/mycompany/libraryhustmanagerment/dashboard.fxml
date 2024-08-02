@@ -127,7 +127,7 @@
                                  </font>
                               </Label>
                               <DatePicker fx:id="managerBook_date" layoutX="113.0" layoutY="299.0" prefHeight="30.0" prefWidth="142.0" promptText="MM-DD-YYYY" styleClass="date" stylesheets="@designDashboard.css" />
-                              <Button fx:id="managerBook_addBtn" layoutX="41.0" layoutY="371.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Add" />
+                              <Button fx:id="managerBook_addBtn" layoutX="41.0" layoutY="371.0" mnemonicParsing="false" onAction="#AddBook" prefHeight="42.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Add" />
                               <Button fx:id="managerBook_updateBtn" layoutX="150.0" layoutY="371.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
