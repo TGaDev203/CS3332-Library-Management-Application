@@ -402,4 +402,8 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
         managerBook_tableView.setItems(bookDataList);
     }
+    @FXML
+    private void SelectTicket() {
+        
+    }
 } 
