@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -401,5 +402,63 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_totalBookTable.setCellValueFactory(new PropertyValueFactory<>("totalBook"));
         managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
         managerBook_tableView.setItems(bookDataList);
+    }
+    
+    private Book selectedBook = null;
+    @FXML
+    private void SelectTicket() {
+        selectedBook = managerBook_tableView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!!!");
+        alert.setHeaderText("Selected ticket successfully!!!");
+        alert.setContentText("Ticket is selected: " + selectedBook.getBookTitle());
+        alert.showAndWait();
+        SetValueForUpdateForm();
+        System.out.print(selectedBook.getBookID());
+    }
+
+    private void SetValueForUpdateForm() {
+        if(selectedBook != null) {
+            managerBook_bookTitle.setText(selectedBook.getBookTitle());
+            managerBook_author.setText(selectedBook.getBookAuthor());
+            managerBook_stock.setText(selectedBook.getTotalBook().toString());
+            managerBook_genre.setText(selectedBook.getGenre());
+            managerBook_publisherField.setText(selectedBook.getPublisher());
+            Date sqlDate = (Date) selectedBook.getPublicationDate();
+            LocalDate localDate = sqlDate.toLocalDate();
+            managerBook_date.setValue(localDate);
+        }
+    }
+    @FXML
+    private void ResetForm() {
+        managerBook_bookTitle.clear();
+        managerBook_author.clear();
+        managerBook_stock.clear();
+        managerBook_genre.clear();
+        managerBook_publisherField.clear();
+        managerBook_date.setValue(null);
+        selectedBook = null;
+    }
+    @FXML
+    private void UpdateBook() {
+        System.out.print(selectedBook == null);
+        if(selectedBook!= null) {
+            Book currentBook = selectedBook;
+            String title = managerBook_bookTitle.getText();
+            String author = managerBook_author.getText();
+            Integer totalBook = Integer.valueOf(managerBook_stock.getText());
+            String genre = managerBook_genre.getText();
+            String publisher = managerBook_publisherField.getText();
+            LocalDate pubLocalDate = managerBook_date.getValue();
+            Date sqlDate = Date.valueOf(pubLocalDate);
+            Book updateBook = new Book(title, genre,author, totalBook,publisher,sqlDate);
+            BookEntity.UpdateBook(updateBook, currentBook);
+            try {
+            setValueForManagerBookTableView();
+                    } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.print("Update");
+        }
     }
 } 

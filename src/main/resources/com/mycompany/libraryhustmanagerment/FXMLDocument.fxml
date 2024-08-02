@@ -36,7 +36,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Hyperlink fx:id="signin_hyperlink" layoutX="327.0" layoutY="466.0" stylesheets="@LoginDesign.css" text="Create an new account?" />
+            <Hyperlink fx:id="signin_hyperlink" layoutX="334.0" layoutY="466.0" stylesheets="@LoginDesign.css" text="Create an new account?" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="signup_form" prefHeight="453.0" prefWidth="688.0" styleClass="bg-form" stylesheets="@LoginDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

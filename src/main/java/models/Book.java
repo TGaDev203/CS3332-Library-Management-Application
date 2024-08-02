@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -32,7 +33,14 @@ public class Book {
         this.publisher = publisher;
         this.publicationDate = publicationDate;
     }
-
+    public Book(String bookTitle, String genre, String bookAuthor, Integer totalBook, String publisher, Date publicationDate) {
+        this.bookTitle = bookTitle;
+        this.genre = genre;
+        this.bookAuthor = bookAuthor;
+        this.totalBook = totalBook;
+        this.publisher = publisher;
+        this.publicationDate = publicationDate;
+    }
     public Book() {
         
     }

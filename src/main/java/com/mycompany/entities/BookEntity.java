@@ -68,4 +68,28 @@ public class BookEntity extends BaseEntity {
         ObservableList<Book> bookDataList = FXCollections.observableList(bookList);
         return bookDataList;
     }
+    public static void UpdateBook (Book updateBook, Book currentBook) {
+        open();
+
+        try {
+            String sql = "UPDATE book SET title = ?, author = ?, genre = ?, publisher = ?, publicationDate = ?, totalBook = ?, availLeft = ? WHERE bookID = ?";
+            statement = conn.prepareStatement(sql);
+            
+            statement.setString(1, updateBook.getBookTitle());
+            statement.setString(2, updateBook.getBookAuthor());
+            statement.setString(3, updateBook.getGenre());
+            statement.setString(4, updateBook.getPublisher());
+            statement.setDate(5, new Date (updateBook.getPublicationDate().getTime()));
+            statement.setInt(6, updateBook.getTotalBook());
+            Integer availLeft = updateBook.getTotalBook() - currentBook.getTotalBook() + currentBook.getAvailBook();
+            statement.setInt(7, availLeft);
+            statement.setInt(8, currentBook.getBookID());
+            
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+    }
 }
