@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -9,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="signIn_form" layoutY="-32.8" prefHeight="535.0" prefWidth="688.0" styleClass="bg-form" stylesheets="@LoginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="signIn_form" layoutY="-32.8" prefHeight="535.0" prefWidth="197.0" stylesheets="@LoginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="signin_close" layoutX="720.0" mnemonicParsing="false" onAction="#signIn_close" prefHeight="26.0" prefWidth="61.0" styleClass="close" stylesheets="@LoginDesign.css">
                <graphic>
@@ -23,21 +24,25 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                </graphic>
             </Button>
-            <FontAwesomeIconView fill="#ea0f0f" glyphName="USER" layoutX="369.0" layoutY="105.0" size="7em" text="" />
-            <Label layoutX="339.0" layoutY="128.0" styleClass="signInText" stylesheets="@LoginDesign.css" text="SIGN IN" textFill="#ccb8b8">
+            <FontAwesomeIconView fill="#ea0f0f" glyphName="USER" layoutX="361.0" layoutY="104.0" size="7em" text="" />
+            <Label layoutX="330.0" layoutY="128.0" styleClass="signInText" stylesheets="@LoginDesign.css" text="SIGN IN" textFill="#ccb8b8">
                <font>
                   <Font name="Times New Roman Bold" size="32.0" />
                </font>
             </Label>
-            <TextField fx:id="signin_username" alignment="BOTTOM_CENTER" layoutX="265.0" layoutY="231.0" prefHeight="30.0" prefWidth="270.0" promptText="Username" styleClass="textFill" stylesheets="@LoginDesign.css" />
-            <PasswordField fx:id="signin_password" alignment="BOTTOM_CENTER" layoutX="265.0" layoutY="310.0" prefHeight="30.0" prefWidth="270.0" promptText="Password" styleClass="textFill" stylesheets="@LoginDesign.css" />
-            <Button fx:id="signinbtn" layoutX="329.0" layoutY="378.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" styleClass="login-btn" stylesheets="@LoginDesign.css" text="LOGIN">
+            <TextField fx:id="signin_username" alignment="BOTTOM_CENTER" layoutX="256.0" layoutY="232.0" prefHeight="30.0" prefWidth="270.0" promptText="Username" styleClass="textFill" stylesheets="@LoginDesign.css" />
+            <PasswordField fx:id="signin_password" alignment="BOTTOM_CENTER" layoutX="256.0" layoutY="313.0" prefHeight="30.0" prefWidth="270.0" promptText="Password" styleClass="textFill" stylesheets="@LoginDesign.css" />
+            <Button fx:id="signinbtn" layoutX="320.0" layoutY="379.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" styleClass="login-btn" stylesheets="@LoginDesign.css" text="LOGIN">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Hyperlink fx:id="signin_hyperlink" layoutX="327.0" layoutY="466.0" stylesheets="@LoginDesign.css" text="Create an new account?" />
+            <Hyperlink fx:id="signin_hyperlink" layoutX="303.0" layoutY="471.0" stylesheets="@LoginDesign.css" text="Create an new account?" />
          </children>
+         <styleClass>
+            <String fx:value="bg-form" />
+            <String fx:value="custom-style" />
+         </styleClass>
       </AnchorPane>
       <AnchorPane fx:id="signup_form" prefHeight="453.0" prefWidth="688.0" styleClass="bg-form" stylesheets="@LoginDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
