@@ -143,4 +143,201 @@ public class BookEntity extends BaseEntity {
         System.out.print("Hello");
         return dataBook;
     }
+    public static ObservableList<Book> GetDataBookByGenre(String genre) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE genre = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, genre);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        
+        return dataBook;
+    }
+    public static ObservableList<Book> GetDataBookByAuthor(String author) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE author = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, author);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        
+        return dataBook;
+    }
+    public static ObservableList<Book> GetDataBookByTitleAndGenre(String title, String genre) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE title = ? AND genre = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.setString(2, genre);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        //System.out.print("Hello");
+        return dataBook;
+    }
+    public static ObservableList<Book> GetDataBookByTitleAndAuthor(String title, String author) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE title = ? AND author = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.setString(2, author);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        //System.out.print("Hello");
+        return dataBook;
+    }
+    public static ObservableList<Book> GetDataBookByTitleAndGenreAndAuthor(String title, String genre, String author) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE title = ? AND genre = ? And author = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.setString(2, genre);
+            statement.setString(3, author);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        //System.out.print("Hello");
+        return dataBook;
+    }
+    public static ObservableList<Book> GetDataBookByGenreAndAuthor(String genre, String author) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE genre = ? AND author = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, genre);
+            statement.setString(2, author);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        //System.out.print("Hello");
+        return dataBook;
+    }
 }

@@ -124,6 +124,12 @@ public class FXMLDashBoardConstroller implements Initializable {
     private AnchorPane main_form;
 
     @FXML
+    private ComboBox<String> managerBook_genreCombobox;
+    
+    @FXML
+    private ComboBox<String> managerBook_authorsCombobox;
+    
+    @FXML
     private Button managerBook_addBtn;
 
     @FXML
@@ -303,6 +309,8 @@ public class FXMLDashBoardConstroller implements Initializable {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
@@ -390,22 +398,87 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
      // Set value for comboBox
-    private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList) {
+    private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().addAll("None");
         for(int i = 0; i < catalogList.size(); i++) {
-            comboBox.getItems().addAll(catalogList.get(i));
-            comboBox.getSelectionModel().select(null);
+           comboBox.getItems().addAll(catalogList.get(i));
         }
+        comboBox.getSelectionModel().select(model);
     }
+    // Set value for BookTitles combobox
     private void SetValueForBookTitlesCatalog() {
         List<String> titleCatalogList = CatalogEntity.GetBookTitleList();
-        SetValueForComboBox(managerBook_bookTitleSearch, titleCatalogList);
+        SetValueForComboBox(managerBook_bookTitleSearch, titleCatalogList, "Book Titles");
     }
+    private void SetValueForBookGenreCatalog() {
+        List<String> genreCatalogList = CatalogEntity.GetGenreList();
+        SetValueForComboBox(managerBook_genreCombobox, genreCatalogList, "Genres");
+    }
+    private void SetValueForBookAuthorCatalog() {
+        List<String> authorCatalogList = CatalogEntity.GetAuhorList();
+        SetValueForComboBox(managerBook_authorsCombobox, authorCatalogList, "Authors");
+    }
+    
+    
     @FXML 
-    private void SetValueManagerBookTableViewByTitle() throws SQLException {
-        String titleCatalog = managerBook_bookTitleSearch.getValue();
-        if(titleCatalog.equals("")) SetValueMangagetBookAll();
-        ObservableList<Book> dataBookByTitle = BookEntity.GetDataBookByTitle(titleCatalog);
-        setValueForManagerBookTableView(dataBookByTitle);
+    private void SetValueManagerBookTableViewByCatalog() throws SQLException {
+         String titleCatalog = managerBook_bookTitleSearch.getValue();
+         String genreCatalog = managerBook_genreCombobox.getValue();
+         String authorCatalog = managerBook_authorsCombobox.getValue();
+        if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            SetValueMangagetBookAll();
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitle = BookEntity.GetDataBookByTitle(titleCatalog);
+            setValueForManagerBookTableView(dataBookByTitle);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndGenre = BookEntity.GetDataBookByTitleAndGenre(titleCatalog, genreCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndGenre);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndAuthor = BookEntity.GetDataBookByTitleAndAuthor(titleCatalog, authorCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndAuthor);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndGenreAndAuthor = BookEntity.GetDataBookByTitleAndGenreAndAuthor(titleCatalog, genreCatalog,authorCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndGenreAndAuthor);
+            
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByGenreAndAuthor = BookEntity.GetDataBookByGenreAndAuthor( genreCatalog,authorCatalog);
+            setValueForManagerBookTableView(dataBookByGenreAndAuthor);
+            
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByGenre = BookEntity.GetDataBookByGenre( genreCatalog);
+            setValueForManagerBookTableView(dataBookByGenre);
+             
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByAuthor = BookEntity.GetDataBookByAuthor( authorCatalog);
+            setValueForManagerBookTableView(dataBookByAuthor);
+           
+        }
     }
     @FXML void SetValueMangagetBookAll() throws SQLException {
         ObservableList<Book> bookDataList = BookEntity.GetDataBooks();
