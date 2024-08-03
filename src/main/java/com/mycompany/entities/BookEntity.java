@@ -92,4 +92,20 @@ public class BookEntity extends BaseEntity {
             close();
         }
     }
+    public static void DeleteBook(Integer deletedBookID) {
+        open();
+        
+        String sql = "DELETE FROM book WHERE bookID = ?";
+        
+        try {
+            statement = conn.prepareStatement(sql);
+        
+            statement.setInt(1, deletedBookID);
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+    }
 }
