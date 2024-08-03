@@ -49,7 +49,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Account;
 import models.Book;
+import models.BorrowBook;
 
 /**
  * FXML Controller class
@@ -57,6 +59,54 @@ import models.Book;
  * @author Legion
  */
 public class FXMLDashBoardConstroller implements Initializable {    
+    @FXML
+    private Button accountBtn;
+
+    @FXML
+    private TableColumn<Account, String> account_nameTable;
+
+    @FXML
+    private Button account_ResetBtn;
+
+    @FXML
+    private Button account_Search;
+
+    @FXML
+    private Button account_Update;
+
+    @FXML
+    private TextField account_accountID;
+
+    @FXML
+    private TableColumn<Account, String> account_accountIDTable;
+
+    @FXML
+    private TextField account_age;
+
+    @FXML
+    private TableColumn<Account, Integer> account_ageTable;
+
+    @FXML
+    private Button account_deleteBtn;
+
+    @FXML
+    private TableColumn<Account, String> account_emailTable;
+
+    @FXML
+    private TextField account_name;
+
+    @FXML
+    private TableColumn<Account, String> account_passwordTableTable;
+
+    @FXML
+    private TableColumn<Account, String> account_phoneNumberTable;
+
+    @FXML
+    private TextField account_searchByUserID;
+
+    @FXML
+    private Button account_selectAccount;
+
     @FXML
     private Button borrowedBook_returnBook;
 
@@ -67,52 +117,52 @@ public class FXMLDashBoardConstroller implements Initializable {
     private ComboBox<?> borrowedBooks_bookIDSearch;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_bookIDTable;
+    private TableColumn<BorrowBook, Integer> borrowedBooks_bookIDTable;
 
     @FXML
-    private ComboBox<?> borrowedBooks_bookTitilesSearch;
+    private TableColumn<BorrowBook, String> borrowedBooks_bookTitleTable;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_bookTitleTable;
+    private TableColumn<BorrowBook, Date> borrowedBooks_borrowDateTable;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_borrowDateTable;
+    private ComboBox<Integer> borrowedBooks_borrowIDSearch;
 
     @FXML
-    private ComboBox<?> borrowedBooks_borrowIDSearch;
-
-    @FXML
-    private TableColumn<?, ?> borrowedBooks_borrowIDTable;
+    private TableColumn<BorrowBook, Integer> borrowedBooks_borrowIDTable;
 
     @FXML
     private Button borrowedBooks_btn;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_dueDateTable;
+    private Button borrowedBook_searchBtn;
+    
+    @FXML
+    private Button borrowedBook_showBorrowedBookBtn;
+    
+    @FXML
+    private TableColumn<BorrowBook, Date> borrowedBooks_dueDateTable;
 
     @FXML
     private AnchorPane borrowedBooks_form;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_returnDateTable;
+    private TableColumn<BorrowBook, Date> borrowedBooks_returnDateTable;
 
     @FXML
-    private ComboBox<?> borrowedBooks_studentIDSearch;
+    private ComboBox<String> borrowedBooks_studentIDSearch;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_studentIDTable;
+    private TableColumn<BorrowBook, String> borrowedBooks_studentIDTable;
 
     @FXML
-    private TableView<?> borrowedBooks_tableView;
+    private TableView<BorrowBook> borrowedBooks_tableView;
 
     @FXML
     private Button close_btn;
 
     @FXML
-    private Button delete_user_btn;
-
-    @FXML
-    private Button edit_users_btn;
+    private AnchorPane dasboard_form;
 
     @FXML
     private Label login_role_of_user;
@@ -124,11 +174,8 @@ public class FXMLDashBoardConstroller implements Initializable {
     private AnchorPane main_form;
 
     @FXML
-    private ComboBox<String> managerBook_genreCombobox;
-    
-    @FXML
-    private ComboBox<String> managerBook_authorsCombobox;
-    
+    private Button managerBook_SearchBtn;
+
     @FXML
     private Button managerBook_addBtn;
 
@@ -136,17 +183,14 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_author;
 
     @FXML
-    private TableColumn<?, ?> managerBook_authorTable;
+    private TableColumn<Book, String> managerBook_authorTable;
 
     @FXML
-    private TableColumn<?, ?> managerBook_availableBookTable;
-    
+    private ComboBox<String> managerBook_authorsCombobox;
+
     @FXML
-    private Button managerBook_SearchBtn;
-    
-    @FXML
-    private Button managerBook_showAllBookBtn;
-    
+    private TableColumn<Book, Integer> managerBook_availableBookTable;
+
     @FXML
     private AnchorPane managerBook_bookBorrowUI;
 
@@ -154,7 +198,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Label managerBook_bookBorrowedID;
 
     @FXML
-    private TableColumn<?, ?> managerBook_bookID;
+    private TableColumn<Book, Integer> managerBook_bookID;
 
     @FXML
     private TextField managerBook_bookTitle;
@@ -163,7 +207,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private ComboBox<String> managerBook_bookTitleSearch;
 
     @FXML
-    private TableColumn<?, ?> managerBook_bookTitleTable;
+    private TableColumn<Book, String> managerBook_bookTitleTable;
 
     @FXML
     private Button managerBook_borrowBookBtn;
@@ -187,6 +231,9 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_genre;
 
     @FXML
+    private ComboBox<String> managerBook_genreCombobox;
+
+    @FXML
     private TableColumn<?, ?> managerBook_genreTable;
 
     @FXML
@@ -196,7 +243,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_publisherField;
 
     @FXML
-    private TableColumn<?, ?> managerBook_publisherTable;
+    private TableColumn<Book, String> managerBook_publisherTable;
 
     @FXML
     private Button managerBook_resetBtn;
@@ -205,13 +252,19 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button managerBook_selectBookBtn;
 
     @FXML
+    private Button managerBook_showAllBookBtn;
+
+    @FXML
     private TextField managerBook_stock;
 
     @FXML
     private TextField managerBook_studentID;
 
     @FXML
-    private TableColumn<?, ?> managerBook_totalBookTable;
+    private TableView<Book> managerBook_tableView;
+
+    @FXML
+    private TableColumn<Book, Integer> managerBook_totalBookTable;
 
     @FXML
     private Button managerBook_updateBtn;
@@ -220,55 +273,13 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button minimize_btn;
 
     @FXML
-    private TableView<Book> managerBook_tableView;
-
-    @FXML
     private Button signout_btn;
 
     @FXML
-    private TableColumn<?, ?> user_usernameTable;
+    private TableView<Account> account_TableView;
 
     @FXML
-    private Button users_Btn;
-
-    @FXML
-    private TableColumn<?, ?> users_PhoneNumTable;
-
-    @FXML
-    private TableColumn<?, ?> users_Table;
-
-    @FXML
-    private TableView<?> users_TableView;
-
-    @FXML
-    private Button users_addRoleBtn;
-
-    @FXML
-    private Button users_authorizeBtn;
-
-    @FXML
-    private Button users_deleteBtn;
-
-    @FXML
-    private TableColumn<?, ?> users_emailTable;
-
-    @FXML
-    private AnchorPane users_form;
-
-    @FXML
-    private ListView<?> users_roleList;
-
-    @FXML
-    private TextField users_roleNameTextField;
-
-    @FXML
-    private TextField users_search;
-
-    @FXML
-    private Button users_selectUser;
-    
-    @FXML
-    private AnchorPane dasboard_form;
+    private AnchorPane account_form;
     
     @FXML
     private void dasboard_form_close() {
@@ -284,16 +295,16 @@ public class FXMLDashBoardConstroller implements Initializable {
         if(event.getSource() == managerBook_btn){
             managerBook_form.setVisible(true);
             borrowedBooks_form.setVisible(false);
-            users_form.setVisible(false);
+            account_form.setVisible(false);
             
         } else if(event.getSource() == borrowedBooks_btn) {
             managerBook_form.setVisible(false);
             borrowedBooks_form.setVisible(true);
-            users_form.setVisible(false);
-        } else if(event.getSource() == users_Btn) {
+            account_form.setVisible(false);
+        } else if(event.getSource() == accountBtn) {
             managerBook_form.setVisible(false);
             borrowedBooks_form.setVisible(false);
-            users_form.setVisible(true);
+            account_form.setVisible(true);
         }
     }
     @FXML
@@ -513,6 +524,7 @@ public class FXMLDashBoardConstroller implements Initializable {
         alert.showAndWait();
         SetValueForUpdateForm();
         System.out.print(selectedBook.getBookID());
+       
     }
 
     private void SetValueForUpdateForm() {
@@ -540,10 +552,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
     // Update FORM
     @FXML
-    private void UpdateBook() {
-        System.out.print(selectedBook == null);
-        if(selectedBook!= null) {
-            Book currentBook = selectedBook;
+private void UpdateBook() {
+    if (selectedBook != null) {
+        try {
+            // Lấy giá trị từ các trường nhập liệu
             String title = managerBook_bookTitle.getText();
             String author = managerBook_author.getText();
             Integer totalBook = Integer.valueOf(managerBook_stock.getText());
@@ -551,22 +563,44 @@ public class FXMLDashBoardConstroller implements Initializable {
             String publisher = managerBook_publisherField.getText();
             LocalDate pubLocalDate = managerBook_date.getValue();
             Date sqlDate = Date.valueOf(pubLocalDate);
-            Book updateBook = new Book(title, genre,author, totalBook,publisher,sqlDate);
-            //Update in database
-            BookEntity.UpdateBook(updateBook, currentBook);
-            //Update in Table
-            try {
+
+            // Tạo đối tượng Book với dữ liệu mới
+            Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
+
+            // Cập nhật trong cơ sở dữ liệu
+            BookEntity.UpdateBook(updateBook, selectedBook);
+            System.out.println("Book ID: " + selectedBook.getBookID());
+
+            // Cập nhật bảng dữ liệu
             SetValueMangagetBookAll();
-            } catch (SQLException ex) {
-            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            // Hiển thị thông báo thành công
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!!!");
             alert.setHeaderText("Update Book successfully!!!");
             alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
             alert.showAndWait();
+        } catch (NumberFormatException e) {
+            // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường số)
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("Please enter valid numbers for stock.");
+            alert.showAndWait();
+        } catch (SQLException ex) {
+            // Xử lý lỗi cơ sở dữ liệu
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error", ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Database Error");
+            alert.setContentText("Failed to update book in the database.");
+            alert.showAndWait();
         }
+    } else {
+        System.out.println("Selected book is null");
     }
+}
+
     @FXML
     private void DeleteBook() {
         if(selectedBook!= null) {
