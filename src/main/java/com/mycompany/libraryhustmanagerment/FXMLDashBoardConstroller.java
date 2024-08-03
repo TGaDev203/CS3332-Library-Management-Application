@@ -6,6 +6,7 @@ package com.mycompany.libraryhustmanagerment;
 
 
 import com.mycompany.entities.BookEntity;
+import com.mycompany.entities.CatalogEntity;
 import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
@@ -133,10 +134,13 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private TableColumn<?, ?> managerBook_availableBookTable;
-
+    
     @FXML
-    private ComboBox<?> managerBook_bookAuthorSearch;
-
+    private Button managerBook_SearchBtn;
+    
+    @FXML
+    private Button managerBook_showAllBookBtn;
+    
     @FXML
     private AnchorPane managerBook_bookBorrowUI;
 
@@ -144,19 +148,13 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Label managerBook_bookBorrowedID;
 
     @FXML
-    private ComboBox<?> managerBook_bookGenres;
-
-    @FXML
     private TableColumn<?, ?> managerBook_bookID;
-
-    @FXML
-    private ComboBox<?> managerBook_bookPubDateSearch;
 
     @FXML
     private TextField managerBook_bookTitle;
 
     @FXML
-    private ComboBox<?> managerBook_bookTitleSearch;
+    private ComboBox<String> managerBook_bookTitleSearch;
 
     @FXML
     private TableColumn<?, ?> managerBook_bookTitleTable;
@@ -300,10 +298,11 @@ public class FXMLDashBoardConstroller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         DisplayUser();
         try {
-            setValueForManagerBookTableView();
+            SetValueMangagetBookAll();
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        SetValueForBookTitlesCatalog();
     }
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
@@ -385,15 +384,35 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_publisherField.clear();
         managerBook_date.setValue(null);
         try {
-            setValueForManagerBookTableView();
+            SetValueMangagetBookAll();
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @FXML
-    private void setValueForManagerBookTableView() throws SQLException {
-        //setvalue for table
+     // Set value for comboBox
+    private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList) {
+        for(int i = 0; i < catalogList.size(); i++) {
+            comboBox.getItems().addAll(catalogList.get(i));
+            comboBox.getSelectionModel().select(null);
+        }
+    }
+    private void SetValueForBookTitlesCatalog() {
+        List<String> titleCatalogList = CatalogEntity.GetBookTitleList();
+        SetValueForComboBox(managerBook_bookTitleSearch, titleCatalogList);
+    }
+    @FXML 
+    private void SetValueManagerBookTableViewByTitle() throws SQLException {
+        String titleCatalog = managerBook_bookTitleSearch.getValue();
+        if(titleCatalog.equals("")) SetValueMangagetBookAll();
+        ObservableList<Book> dataBookByTitle = BookEntity.GetDataBookByTitle(titleCatalog);
+        setValueForManagerBookTableView(dataBookByTitle);
+    }
+    @FXML void SetValueMangagetBookAll() throws SQLException {
         ObservableList<Book> bookDataList = BookEntity.GetDataBooks();
+        setValueForManagerBookTableView(bookDataList);
+    }
+    private void setValueForManagerBookTableView(ObservableList<Book> bookDataList) {
+        //setvalue for table
         managerBook_bookTitleTable.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         managerBook_genreTable.setCellValueFactory(new PropertyValueFactory<>("genre"));
         managerBook_bookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
@@ -435,6 +454,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             managerBook_date.setValue(localDate);
         }
     }
+    // RESET FORM
     @FXML
     private void ResetForm() {
         managerBook_bookTitle.clear();
@@ -445,6 +465,7 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_date.setValue(null);
         selectedBook = null;
     }
+    // Update FORM
     @FXML
     private void UpdateBook() {
         System.out.print(selectedBook == null);
@@ -462,7 +483,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             BookEntity.UpdateBook(updateBook, currentBook);
             //Update in Table
             try {
-            setValueForManagerBookTableView();
+            SetValueMangagetBookAll();
             } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -484,10 +505,12 @@ public class FXMLDashBoardConstroller implements Initializable {
             alert.setContentText("Book is deleted: " + selectedBook.getBookTitle());
             alert.showAndWait();
             try {
-            setValueForManagerBookTableView();
+            SetValueMangagetBookAll();
             } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+
 } 

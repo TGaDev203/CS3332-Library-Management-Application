@@ -11,7 +11,10 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,5 +110,37 @@ public class BookEntity extends BaseEntity {
         } finally {
             close();
         }
+    }
+    public static ObservableList<Book> GetDataBookByTitle(String title) {
+        open();
+        List<Book> bookList = new ArrayList<>();
+        ObservableList<Book> dataBook = null;
+        try {
+            String sql = "Select * From book WHERE title = ?";
+            
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, title);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Book book = new Book();
+              book.setBookTitle(rs.getString("title"));
+              book.setBookID(rs.getInt("bookID"));
+              book.setBookAuthor(rs.getString("author"));
+              book.setGenre(rs.getString("genre"));
+              book.setPublisher(rs.getString("publisher"));
+              book.setPublicationDate(rs.getDate("publicationDate"));
+              book.setTotalBook(rs.getInt("totalBook"));
+              book.setAvailBook(rs.getInt("availLeft"));
+              bookList.add(book);
+            }
+            dataBook = FXCollections.observableList(bookList);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        System.out.print("Hello");
+        return dataBook;
     }
 }
