@@ -524,6 +524,7 @@ public class FXMLDashBoardConstroller implements Initializable {
         alert.showAndWait();
         SetValueForUpdateForm();
         System.out.print(selectedBook.getBookID());
+       
     }
 
     private void SetValueForUpdateForm() {
@@ -551,10 +552,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
     // Update FORM
     @FXML
-    private void UpdateBook() {
-        System.out.print(selectedBook == null);
-        if(selectedBook!= null) {
-            Book currentBook = selectedBook;
+private void UpdateBook() {
+    if (selectedBook != null) {
+        try {
+            // Lấy giá trị từ các trường nhập liệu
             String title = managerBook_bookTitle.getText();
             String author = managerBook_author.getText();
             Integer totalBook = Integer.valueOf(managerBook_stock.getText());
@@ -562,22 +563,44 @@ public class FXMLDashBoardConstroller implements Initializable {
             String publisher = managerBook_publisherField.getText();
             LocalDate pubLocalDate = managerBook_date.getValue();
             Date sqlDate = Date.valueOf(pubLocalDate);
-            Book updateBook = new Book(title, genre,author, totalBook,publisher,sqlDate);
-            //Update in database
-            BookEntity.UpdateBook(updateBook, currentBook);
-            //Update in Table
-            try {
+
+            // Tạo đối tượng Book với dữ liệu mới
+            Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
+
+            // Cập nhật trong cơ sở dữ liệu
+            BookEntity.UpdateBook(updateBook, selectedBook);
+            System.out.println("Book ID: " + selectedBook.getBookID());
+
+            // Cập nhật bảng dữ liệu
             SetValueMangagetBookAll();
-            } catch (SQLException ex) {
-            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            // Hiển thị thông báo thành công
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!!!");
             alert.setHeaderText("Update Book successfully!!!");
             alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
             alert.showAndWait();
+        } catch (NumberFormatException e) {
+            // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường số)
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("Please enter valid numbers for stock.");
+            alert.showAndWait();
+        } catch (SQLException ex) {
+            // Xử lý lỗi cơ sở dữ liệu
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error", ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Database Error");
+            alert.setContentText("Failed to update book in the database.");
+            alert.showAndWait();
         }
+    } else {
+        System.out.println("Selected book is null");
     }
+}
+
     @FXML
     private void DeleteBook() {
         if(selectedBook!= null) {

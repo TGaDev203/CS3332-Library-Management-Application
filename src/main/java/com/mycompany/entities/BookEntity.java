@@ -8,6 +8,7 @@ import static com.mycompany.entities.BaseEntity.conn;
 import static com.mycompany.entities.BaseEntity.open;
 import static com.mycompany.entities.BaseEntity.statement;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -340,4 +341,7 @@ public class BookEntity extends BaseEntity {
         //System.out.print("Hello");
         return dataBook;
     }
+    
+
+
 }
