@@ -301,7 +301,7 @@ public class FXMLDashBoardConstroller implements Initializable {
         DisplayUser();
         try {
             setValueForManagerBookTableView();
-                    } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -386,12 +386,13 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_date.setValue(null);
         try {
             setValueForManagerBookTableView();
-                    } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
     private void setValueForManagerBookTableView() throws SQLException {
+        //setvalue for table
         ObservableList<Book> bookDataList = BookEntity.GetDataBooks();
         managerBook_bookTitleTable.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         managerBook_genreTable.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -403,8 +404,13 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
         managerBook_tableView.setItems(bookDataList);
     }
-    
-    private Book selectedBook = null;
+    /*
+        Initialize selectedBook
+    */
+    private Book selectedBook = null;  
+    /*
+        Initialize selectedBook
+    */
     @FXML
     private void SelectBook() {
         selectedBook = managerBook_tableView.getSelectionModel().getSelectedItem();
@@ -452,17 +458,36 @@ public class FXMLDashBoardConstroller implements Initializable {
             LocalDate pubLocalDate = managerBook_date.getValue();
             Date sqlDate = Date.valueOf(pubLocalDate);
             Book updateBook = new Book(title, genre,author, totalBook,publisher,sqlDate);
+            //Update in database
             BookEntity.UpdateBook(updateBook, currentBook);
+            //Update in Table
             try {
             setValueForManagerBookTableView();
-                    } catch (SQLException ex) {
+            } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!!!");
             alert.setHeaderText("Update Book successfully!!!");
-            alert.setContentText("Book is selected: " + selectedBook.getBookTitle());
+            alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
             alert.showAndWait();
+        }
+    }
+    @FXML
+    private void DeleteBook() {
+        if(selectedBook!= null) {
+            int deletedBookID = selectedBook.getBookID();
+            BookEntity.DeleteBook(deletedBookID);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success!!!");
+            alert.setHeaderText("Delete Book successfully!!!");
+            alert.setContentText("Book is deleted: " + selectedBook.getBookTitle());
+            alert.showAndWait();
+            try {
+            setValueForManagerBookTableView();
+            } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 } 
