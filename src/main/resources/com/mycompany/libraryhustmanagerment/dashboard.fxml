@@ -172,13 +172,13 @@
                            <children>
                               <TableView fx:id="managerBook_tableView" layoutX="3.0" layoutY="66.0" onSort="#setValueForManagerBookTableView" prefHeight="407.0" prefWidth="658.0" styleClass="table-view" stylesheets="@designDashboard.css">
                                 <columns>
-                                    <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
-                                  <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
-                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Gerne" />
-                                    <TableColumn fx:id="managerBook_authorTable" prefWidth="111.0" text="Authors" />
-                                    <TableColumn fx:id="managerBook_publisherTable" prefWidth="72.0" text="Publisher" />
-                                    <TableColumn fx:id="managerBook_publicationDate" prefWidth="99.0" text="Publication Date" />
-                                    <TableColumn fx:id="managerBook_totalBookTable" prefWidth="73.0" text="Total Book" />
+                                    <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="46.0" text="BookID" />
+                                  <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="122.0" text="Book Title" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="73.0" text="Gerne" />
+                                    <TableColumn fx:id="managerBook_authorTable" prefWidth="101.0" text="Authors" />
+                                    <TableColumn fx:id="managerBook_publisherTable" prefWidth="89.0" text="Publisher" />
+                                    <TableColumn fx:id="managerBook_publicationDate" prefWidth="98.0" text="Publication Date" />
+                                    <TableColumn fx:id="managerBook_totalBookTable" prefWidth="66.0" text="Total Book" />
                                     <TableColumn fx:id="managerBook_availableBookTable" prefWidth="62.0" text="Available" />
                                 </columns>
                               </TableView>
