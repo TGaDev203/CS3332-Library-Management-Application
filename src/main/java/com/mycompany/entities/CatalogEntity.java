@@ -43,4 +43,48 @@ public class CatalogEntity extends BaseEntity {
         }
         return uniqueBookTitles;
     }
+    public static List<String> GetGenreList() {
+        List<String> catalogGenre = new ArrayList<>();
+        List<String> uniqueBookGenre = null;
+        open();
+        try {
+            String sql = "Select genre From catalog";
+            statement = conn.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                String genre = rs.getString("genre");
+                catalogGenre.add(genre);
+            }
+            Set<String> uniqueGenres = new HashSet<>(catalogGenre);
+            uniqueBookGenre = new ArrayList<>(uniqueGenres);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        return uniqueBookGenre;
+    }
+    public static List<String> GetAuhorList() {
+        List<String> catalogAuthor = new ArrayList<>();
+        List<String> uniqueBookAuthor = null;
+        open();
+        try {
+            String sql = "Select author From catalog";
+            statement = conn.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                String author = rs.getString("author");
+                catalogAuthor.add(author);
+            }
+            Set<String> uniqueAuthor = new HashSet<>(catalogAuthor);
+            uniqueBookAuthor = new ArrayList<>(uniqueAuthor);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CatalogEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        return uniqueBookAuthor;
+    }
 }
