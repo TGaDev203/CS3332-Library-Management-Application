@@ -54,7 +54,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login_username" alignment="CENTER" layoutX="5.0" layoutY="144.0" prefHeight="18.0" prefWidth="190.0" text="User Name" textFill="WHITE">
+                  <Label fx:id="login_username" alignment="CENTER" layoutX="3.0" layoutY="143.0" prefHeight="18.0" prefWidth="190.0" text="User Name" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="20.0" />
                      </font>
@@ -115,7 +115,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="managerBook_bookTitle" layoutX="106.0" layoutY="27.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
-                              <TextField fx:id="managerBook_genre" layoutX="112.0" layoutY="193.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
+                              <TextField fx:id="managerBook_genre" layoutX="114.0" layoutY="203.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
                               <Label layoutX="6.0" layoutY="305.0" prefHeight="18.0" prefWidth="110.0" text="Publication Date:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -170,15 +170,15 @@
                         </AnchorPane>
                         <AnchorPane layoutX="273.0" layoutY="13.0" prefHeight="530.0" prefWidth="670.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
-                              <TableView fx:id="managerBook_tableView" layoutX="3.0" layoutY="66.0" onSort="#setValueForManagerBookTableView" prefHeight="407.0" prefWidth="658.0" styleClass="table-view" stylesheets="@designDashboard.css">
+                              <TableView fx:id="managerBook_tableView" layoutX="3.0" layoutY="66.0" prefHeight="407.0" prefWidth="658.0" styleClass="table-view" stylesheets="@designDashboard.css">
                                 <columns>
-                                    <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="46.0" text="BookID" />
-                                  <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="122.0" text="Book Title" />
-                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="73.0" text="Gerne" />
-                                    <TableColumn fx:id="managerBook_authorTable" prefWidth="101.0" text="Authors" />
-                                    <TableColumn fx:id="managerBook_publisherTable" prefWidth="89.0" text="Publisher" />
-                                    <TableColumn fx:id="managerBook_publicationDate" prefWidth="98.0" text="Publication Date" />
-                                    <TableColumn fx:id="managerBook_totalBookTable" prefWidth="66.0" text="Total Book" />
+                                    <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
+                                  <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Gerne" />
+                                    <TableColumn fx:id="managerBook_authorTable" prefWidth="111.0" text="Authors" />
+                                    <TableColumn fx:id="managerBook_publisherTable" prefWidth="72.0" text="Publisher" />
+                                    <TableColumn fx:id="managerBook_publicationDate" prefWidth="99.0" text="Publication Date" />
+                                    <TableColumn fx:id="managerBook_totalBookTable" prefWidth="73.0" text="Total Book" />
                                     <TableColumn fx:id="managerBook_availableBookTable" prefWidth="62.0" text="Available" />
                                 </columns>
                               </TableView>
@@ -203,15 +203,12 @@
                               <Button fx:id="managerBook_borrowBookBtn" layoutX="494.0" layoutY="476.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Borrow Book" />
                               <AnchorPane layoutX="6.0" layoutY="5.0" maxHeight="59.0" maxWidth="654.0" minHeight="20.0" minWidth="600.0" prefHeight="59.0" prefWidth="654.0">
                                  <children>
-                                    <Label layoutX="12.0" layoutY="5.0" text="Search By" textFill="#9c1f1f">
+                                    <Label layoutX="35.0" layoutY="18.0" text="Search By" textFill="#9c1f1f">
                                        <font>
                                           <Font name="Tahoma" size="18.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="managerBook_bookTitleSearch" layoutX="5.0" layoutY="28.0" prefHeight="26.0" prefWidth="112.0" promptText="Book Titles" />
-                                    <ComboBox fx:id="managerBook_bookGenres" layoutX="145.0" layoutY="28.0" prefHeight="26.0" prefWidth="112.0" promptText="Book Genres" />
-                                    <ComboBox fx:id="managerBook_bookAuthorSearch" layoutX="281.0" layoutY="28.0" prefHeight="26.0" prefWidth="117.0" promptText="Book Authors" />
-                                    <ComboBox fx:id="managerBook_bookPubDateSearch" layoutX="429.0" layoutY="28.0" prefHeight="26.0" prefWidth="135.0" promptText="Book PubDates" />
+                                    <ComboBox fx:id="managerBook_bookTitleSearch" layoutX="139.0" layoutY="10.0" prefHeight="43.0" prefWidth="158.0" promptText="Book Titles" />
                                     <AnchorPane fx:id="managerBook_bookBorrowUI" layoutX="-282.0" layoutY="-5.0" prefHeight="534.0" prefWidth="938.0" styleClass="bg-white" stylesheets="@designDashboard.css" visible="false">
                                        <children>
                                           <Label layoutX="220.0" layoutY="21.0" prefHeight="102.0" prefWidth="550.0" text="Book Borrow" textAlignment="CENTER">
@@ -234,6 +231,25 @@
                                           <TextField fx:id="managerBook_studentID" layoutX="483.0" layoutY="331.0" prefHeight="35.0" prefWidth="159.0" styleClass="textField" stylesheets="@designDashboard.css" />
                                        </children>
                                     </AnchorPane>
+                                    <Button fx:id="managerBook_SearchBtn" layoutX="319.0" layoutY="11.0" mnemonicParsing="false" onAction="#SetValueManagerBookTableViewByTitle" prefHeight="42.0" prefWidth="116.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Search">
+                                       <textFill>
+                                          <LinearGradient endX="1.0" endY="1.0">
+                                             <stops>
+                                                <Stop>
+                                                   <color>
+                                                      <Color red="0.800000011920929" green="0.26274511218070984" blue="0.26274511218070984" />
+                                                   </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                   <color>
+                                                      <Color red="0.49473685026168823" green="0.17957115173339844" blue="0.17957115173339844" />
+                                                   </color>
+                                                </Stop>
+                                             </stops>
+                                          </LinearGradient>
+                                       </textFill>
+                                    </Button>
+                                    <Button fx:id="managerBook_showAllBookBtn" layoutX="472.0" layoutY="11.0" mnemonicParsing="false" onAction="#SetValueMangagetBookAll" prefHeight="42.0" prefWidth="125.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Show All Book" />
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
