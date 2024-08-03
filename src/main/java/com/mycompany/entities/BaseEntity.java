@@ -17,19 +17,18 @@ import java.util.logging.Logger;
  * @author Legion
  */
 public class BaseEntity {
-    private static final String DATABASE = "library_hust_management"; 
+    private static final String DATABASE = "library_hust_management";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
-    static Connection conn = null;
-    static PreparedStatement statement = null;
+    public static Connection conn = null;
+    public static PreparedStatement statement = null;
 
-    static void open() {
+    public static void open() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DATABASE, USERNAME, PASSWORD);
             if (conn != null && !conn.isClosed()) {
                 System.out.println("Connection to database successful!");
-                // Perform a simple query to check connectivity
                 try (Statement stmt = conn.createStatement()) {
                     stmt.executeQuery("SELECT 1");
                 }
@@ -39,7 +38,7 @@ public class BaseEntity {
         }
     }
 
-    static void close() {
+    public static void close() {
         if (conn != null) {
             try {
                 conn.close();

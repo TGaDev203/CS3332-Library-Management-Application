@@ -1,5 +1,5 @@
 .bg-form {
-    -fx-background-image: url("/com/mycompany/libraryhustmanagerment/Images/Background2.jpg");
+    /* -fx-background-image: url("../Images/Background1.jpg"); */
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
@@ -21,7 +21,7 @@
 }
 .login-btn {
     -fx-background-color: linear-gradient(to bottom right, #35529d, #2371d0);
-    -fx-background-radius: 8px;
+    -fx-background-radius   : 8px;
     -fx-text-fill: #fff;
     -fx-font-size: 14px;
     -fx-cursor: hand;
