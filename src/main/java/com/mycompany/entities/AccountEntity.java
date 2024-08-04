@@ -9,14 +9,17 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mycompany.libraryhustmanagerment.DuplicateEntryException;
+
 import models.Account;
 
 /**
  *
  * @author Admin
  */
+
 public class AccountEntity extends BaseEntity {
-    public static void insert(Account newAccount) {
+    public static void insert(Account newAccount) throws DuplicateEntryException {
         open();
 
         try {
@@ -39,7 +42,7 @@ public class AccountEntity extends BaseEntity {
             if (existingCount > 0) {
                 Logger.getLogger(AccountEntity.class.getName()).log(Level.SEVERE,
                         "Email or phone number already exists.");
-                return;
+                throw new DuplicateEntryException("Email or phone number already exists.");
             }
 
             String sql = "INSERT INTO Account(accountId, name, emailAddress, phoneNumber, password, role) VALUES (?, ?, ?, ?, ?, ?)";
@@ -69,7 +72,6 @@ public class AccountEntity extends BaseEntity {
 
             statement.setString(1, updateAccount.GetName());
             statement.setString(2, updateAccount.GetEmailAddress());
-            statement.setString(3, updateAccount.GetEmailAddress().toUpperCase());
             statement.setString(4, updateAccount.GetPhoneNumber());
             statement.setString(5, updateAccount.GetPassword());
             statement.setInt(6, updateAccount.GetAccountId());
@@ -85,7 +87,7 @@ public class AccountEntity extends BaseEntity {
     public static void delete(Integer accountId) {
         open();
 
-        String sql = "DELETE FROM Users WHERE AccountId = ?";
+        String sql = "DELETE FROM Account WHERE accountId = ?";
 
         try {
             statement = conn.prepareStatement(sql);

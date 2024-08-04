@@ -214,8 +214,7 @@ public class FXMLDocumentController implements Initializable {
         String password = signup_password.getText();
 
         if (accountIdText.isEmpty() || !accountIdText.matches("\\d+")) {
-            showAlert("Error!", "Invalid Account ID!",
-                    "Account ID must be a number, please try again!");
+            showAlert("Error!", "Invalid Account ID!", "Account ID must be a number, please try again!");
             return;
         }
 
@@ -240,8 +239,7 @@ public class FXMLDocumentController implements Initializable {
         }
 
         if (AccountEntity.GetDataAccountById(accountId) != null) {
-            showAlert("Error!", "Cannot Register!",
-                    "Account ID already exists, please choose another one!");
+            showAlert("Error!", "Cannot Register!", "Account ID already exists, please choose another one!");
             return;
         }
 
@@ -253,10 +251,15 @@ public class FXMLDocumentController implements Initializable {
 
         Account account = new Account(accountId, name, emailAddress, phone, password, "Student");
 
-        AccountEntity.insert(account);
-        signIn_form.setVisible(true);
-        signup_form.setVisible(false);
-        showAlert("Successfully!", "Registration Successful!",
-                "Account " + account.GetAccountId() + " is registered!");
+        try {
+            AccountEntity.insert(account);
+            signIn_form.setVisible(true);
+            signup_form.setVisible(false);
+            showAlert("Successfully!", "Registration Successful!",
+                    "Account " + account.GetAccountId() + " is registered!");
+        } catch (DuplicateEntryException e) {
+            showAlert("Error!", "Cannot Register!", e.getMessage());
+        }
     }
+
 }
