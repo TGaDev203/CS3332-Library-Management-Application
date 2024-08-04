@@ -281,6 +281,8 @@ public class FXMLDashBoardConstroller implements Initializable {
     @FXML
     private AnchorPane account_form;
     
+    
+    
     @FXML
     private void dasboard_form_close() {
         System.exit(0);
@@ -313,6 +315,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         main_form.setOnMousePressed(this::handleMousePressed);
+        
+        // Đặt sự kiện cho khi kéo chuột
+        main_form.setOnMouseDragged(this::handleMouseDragged);
         DisplayUser();
         try {
             SetValueMangagetBookAll();
@@ -322,6 +328,21 @@ public class FXMLDashBoardConstroller implements Initializable {
         SetValueForBookTitlesCatalog();
         SetValueForBookGenreCatalog();
         SetValueForBookAuthorCatalog();
+    }
+    // 
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private void handleMousePressed(MouseEvent event) {
+        // Ghi lại tọa độ chuột
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
+    private void handleMouseDragged(MouseEvent event) {
+        // Tính toán sự dịch chuyển và thay đổi vị trí của pane
+        double newX = event.getScreenX() - xOffset;
+        double newY = event.getScreenY() - yOffset;
+        main_form.getScene().getWindow().setX(newX);
+        main_form.getScene().getWindow().setY(newY);
     }
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
@@ -429,8 +450,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         List<String> authorCatalogList = CatalogEntity.GetAuhorList();
         SetValueForComboBox(managerBook_authorsCombobox, authorCatalogList, "Authors");
     }
-    
-    
     @FXML 
     private void SetValueManagerBookTableViewByCatalog() throws SQLException {
          String titleCatalog = managerBook_bookTitleSearch.getValue();
@@ -552,54 +571,54 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
     // Update FORM
     @FXML
-private void UpdateBook() {
-    if (selectedBook != null) {
-        try {
-            // Lấy giá trị từ các trường nhập liệu
-            String title = managerBook_bookTitle.getText();
-            String author = managerBook_author.getText();
-            Integer totalBook = Integer.valueOf(managerBook_stock.getText());
-            String genre = managerBook_genre.getText();
-            String publisher = managerBook_publisherField.getText();
-            LocalDate pubLocalDate = managerBook_date.getValue();
-            Date sqlDate = Date.valueOf(pubLocalDate);
+    private void UpdateBook() {
+        if (selectedBook != null) {
+            try {
+                // Lấy giá trị từ các trường nhập liệu
+                String title = managerBook_bookTitle.getText();
+                String author = managerBook_author.getText();
+                Integer totalBook = Integer.valueOf(managerBook_stock.getText());
+                String genre = managerBook_genre.getText();
+                String publisher = managerBook_publisherField.getText();
+                LocalDate pubLocalDate = managerBook_date.getValue();
+                Date sqlDate = Date.valueOf(pubLocalDate);
 
-            // Tạo đối tượng Book với dữ liệu mới
-            Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
+                // Tạo đối tượng Book với dữ liệu mới
+                Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
 
-            // Cập nhật trong cơ sở dữ liệu
-            BookEntity.UpdateBook(updateBook, selectedBook);
-            System.out.println("Book ID: " + selectedBook.getBookID());
+                // Cập nhật trong cơ sở dữ liệu
+                BookEntity.UpdateBook(updateBook, selectedBook);
+                System.out.println("Book ID: " + selectedBook.getBookID());
 
-            // Cập nhật bảng dữ liệu
-            SetValueMangagetBookAll();
+                // Cập nhật bảng dữ liệu
+                SetValueMangagetBookAll();
 
-            // Hiển thị thông báo thành công
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success!!!");
-            alert.setHeaderText("Update Book successfully!!!");
-            alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
-            alert.showAndWait();
-        } catch (NumberFormatException e) {
-            // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường số)
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Input");
-            alert.setContentText("Please enter valid numbers for stock.");
-            alert.showAndWait();
-        } catch (SQLException ex) {
-            // Xử lý lỗi cơ sở dữ liệu
-            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error", ex);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Database Error");
-            alert.setContentText("Failed to update book in the database.");
-            alert.showAndWait();
+                // Hiển thị thông báo thành công
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success!!!");
+                alert.setHeaderText("Update Book successfully!!!");
+                alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
+                alert.showAndWait();
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường số)
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Input");
+                alert.setContentText("Please enter valid numbers for stock.");
+                alert.showAndWait();
+            } catch (SQLException ex) {
+                // Xử lý lỗi cơ sở dữ liệu
+                Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error", ex);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Database Error");
+                alert.setContentText("Failed to update book in the database.");
+                alert.showAndWait();
+            }
+        } else {
+            System.out.println("Selected book is null");
         }
-    } else {
-        System.out.println("Selected book is null");
     }
-}
 
     @FXML
     private void DeleteBook() {
