@@ -6,6 +6,7 @@ package com.mycompany.libraryhustmanagerment;
 
 
 import com.mycompany.entities.BookEntity;
+import com.mycompany.entities.CatalogEntity;
 import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +49,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Account;
 import models.Book;
+import models.BorrowBook;
 
 /**
  * FXML Controller class
@@ -55,6 +59,54 @@ import models.Book;
  * @author Legion
  */
 public class FXMLDashBoardConstroller implements Initializable {    
+    @FXML
+    private Button accountBtn;
+
+    @FXML
+    private TableColumn<Account, String> account_nameTable;
+
+    @FXML
+    private Button account_ResetBtn;
+
+    @FXML
+    private Button account_Search;
+
+    @FXML
+    private Button account_Update;
+
+    @FXML
+    private TextField account_accountID;
+
+    @FXML
+    private TableColumn<Account, String> account_accountIDTable;
+
+    @FXML
+    private TextField account_age;
+
+    @FXML
+    private TableColumn<Account, Integer> account_ageTable;
+
+    @FXML
+    private Button account_deleteBtn;
+
+    @FXML
+    private TableColumn<Account, String> account_emailTable;
+
+    @FXML
+    private TextField account_name;
+
+    @FXML
+    private TableColumn<Account, String> account_passwordTableTable;
+
+    @FXML
+    private TableColumn<Account, String> account_phoneNumberTable;
+
+    @FXML
+    private TextField account_searchByUserID;
+
+    @FXML
+    private Button account_selectAccount;
+
     @FXML
     private Button borrowedBook_returnBook;
 
@@ -65,52 +117,52 @@ public class FXMLDashBoardConstroller implements Initializable {
     private ComboBox<?> borrowedBooks_bookIDSearch;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_bookIDTable;
+    private TableColumn<BorrowBook, Integer> borrowedBooks_bookIDTable;
 
     @FXML
-    private ComboBox<?> borrowedBooks_bookTitilesSearch;
+    private TableColumn<BorrowBook, String> borrowedBooks_bookTitleTable;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_bookTitleTable;
+    private TableColumn<BorrowBook, Date> borrowedBooks_borrowDateTable;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_borrowDateTable;
+    private ComboBox<Integer> borrowedBooks_borrowIDSearch;
 
     @FXML
-    private ComboBox<?> borrowedBooks_borrowIDSearch;
-
-    @FXML
-    private TableColumn<?, ?> borrowedBooks_borrowIDTable;
+    private TableColumn<BorrowBook, Integer> borrowedBooks_borrowIDTable;
 
     @FXML
     private Button borrowedBooks_btn;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_dueDateTable;
+    private Button borrowedBook_searchBtn;
+    
+    @FXML
+    private Button borrowedBook_showBorrowedBookBtn;
+    
+    @FXML
+    private TableColumn<BorrowBook, Date> borrowedBooks_dueDateTable;
 
     @FXML
     private AnchorPane borrowedBooks_form;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_returnDateTable;
+    private TableColumn<BorrowBook, Date> borrowedBooks_returnDateTable;
 
     @FXML
-    private ComboBox<?> borrowedBooks_studentIDSearch;
+    private ComboBox<String> borrowedBooks_studentIDSearch;
 
     @FXML
-    private TableColumn<?, ?> borrowedBooks_studentIDTable;
+    private TableColumn<BorrowBook, String> borrowedBooks_studentIDTable;
 
     @FXML
-    private TableView<?> borrowedBooks_tableView;
+    private TableView<BorrowBook> borrowedBooks_tableView;
 
     @FXML
     private Button close_btn;
 
     @FXML
-    private Button delete_user_btn;
-
-    @FXML
-    private Button edit_users_btn;
+    private AnchorPane dasboard_form;
 
     @FXML
     private Label login_role_of_user;
@@ -122,19 +174,22 @@ public class FXMLDashBoardConstroller implements Initializable {
     private AnchorPane main_form;
 
     @FXML
+    private Button managerBook_SearchBtn;
+
+    @FXML
     private Button managerBook_addBtn;
 
     @FXML
     private TextField managerBook_author;
 
     @FXML
-    private TableColumn<?, ?> managerBook_authorTable;
+    private TableColumn<Book, String> managerBook_authorTable;
 
     @FXML
-    private TableColumn<?, ?> managerBook_availableBookTable;
+    private ComboBox<String> managerBook_authorsCombobox;
 
     @FXML
-    private ComboBox<?> managerBook_bookAuthorSearch;
+    private TableColumn<Book, Integer> managerBook_availableBookTable;
 
     @FXML
     private AnchorPane managerBook_bookBorrowUI;
@@ -143,22 +198,16 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Label managerBook_bookBorrowedID;
 
     @FXML
-    private ComboBox<?> managerBook_bookGenres;
-
-    @FXML
-    private TableColumn<?, ?> managerBook_bookID;
-
-    @FXML
-    private ComboBox<?> managerBook_bookPubDateSearch;
+    private TableColumn<Book, Integer> managerBook_bookID;
 
     @FXML
     private TextField managerBook_bookTitle;
 
     @FXML
-    private ComboBox<?> managerBook_bookTitleSearch;
+    private ComboBox<String> managerBook_bookTitleSearch;
 
     @FXML
-    private TableColumn<?, ?> managerBook_bookTitleTable;
+    private TableColumn<Book, String> managerBook_bookTitleTable;
 
     @FXML
     private Button managerBook_borrowBookBtn;
@@ -182,6 +231,9 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_genre;
 
     @FXML
+    private ComboBox<String> managerBook_genreCombobox;
+
+    @FXML
     private TableColumn<?, ?> managerBook_genreTable;
 
     @FXML
@@ -191,7 +243,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     private TextField managerBook_publisherField;
 
     @FXML
-    private TableColumn<?, ?> managerBook_publisherTable;
+    private TableColumn<Book, String> managerBook_publisherTable;
 
     @FXML
     private Button managerBook_resetBtn;
@@ -200,13 +252,19 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button managerBook_selectBookBtn;
 
     @FXML
+    private Button managerBook_showAllBookBtn;
+
+    @FXML
     private TextField managerBook_stock;
 
     @FXML
     private TextField managerBook_studentID;
 
     @FXML
-    private TableColumn<?, ?> managerBook_totalBookTable;
+    private TableView<Book> managerBook_tableView;
+
+    @FXML
+    private TableColumn<Book, Integer> managerBook_totalBookTable;
 
     @FXML
     private Button managerBook_updateBtn;
@@ -215,55 +273,15 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button minimize_btn;
 
     @FXML
-    private TableView<Book> managerBook_tableView;
-
-    @FXML
     private Button signout_btn;
 
     @FXML
-    private TableColumn<?, ?> user_usernameTable;
+    private TableView<Account> account_TableView;
 
     @FXML
-    private Button users_Btn;
-
-    @FXML
-    private TableColumn<?, ?> users_PhoneNumTable;
-
-    @FXML
-    private TableColumn<?, ?> users_Table;
-
-    @FXML
-    private TableView<?> users_TableView;
-
-    @FXML
-    private Button users_addRoleBtn;
-
-    @FXML
-    private Button users_authorizeBtn;
-
-    @FXML
-    private Button users_deleteBtn;
-
-    @FXML
-    private TableColumn<?, ?> users_emailTable;
-
-    @FXML
-    private AnchorPane users_form;
-
-    @FXML
-    private ListView<?> users_roleList;
-
-    @FXML
-    private TextField users_roleNameTextField;
-
-    @FXML
-    private TextField users_search;
-
-    @FXML
-    private Button users_selectUser;
+    private AnchorPane account_form;
     
-    @FXML
-    private AnchorPane dasboard_form;
+    
     
     @FXML
     private void dasboard_form_close() {
@@ -279,16 +297,16 @@ public class FXMLDashBoardConstroller implements Initializable {
         if(event.getSource() == managerBook_btn){
             managerBook_form.setVisible(true);
             borrowedBooks_form.setVisible(false);
-            users_form.setVisible(false);
+            account_form.setVisible(false);
             
         } else if(event.getSource() == borrowedBooks_btn) {
             managerBook_form.setVisible(false);
             borrowedBooks_form.setVisible(true);
-            users_form.setVisible(false);
-        } else if(event.getSource() == users_Btn) {
+            account_form.setVisible(false);
+        } else if(event.getSource() == accountBtn) {
             managerBook_form.setVisible(false);
             borrowedBooks_form.setVisible(false);
-            users_form.setVisible(true);
+            account_form.setVisible(true);
         }
     }
     @FXML
@@ -297,12 +315,34 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         main_form.setOnMousePressed(this::handleMousePressed);
+        
+        // Đặt sự kiện cho khi kéo chuột
+        main_form.setOnMouseDragged(this::handleMouseDragged);
         DisplayUser();
         try {
-            setValueForManagerBookTableView();
-                    } catch (SQLException ex) {
+            SetValueMangagetBookAll();
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
+    }
+    // 
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private void handleMousePressed(MouseEvent event) {
+        // Ghi lại tọa độ chuột
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
+    private void handleMouseDragged(MouseEvent event) {
+        // Tính toán sự dịch chuyển và thay đổi vị trí của pane
+        double newX = event.getScreenX() - xOffset;
+        double newY = event.getScreenY() - yOffset;
+        main_form.getScene().getWindow().setX(newX);
+        main_form.getScene().getWindow().setY(newY);
     }
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
@@ -384,14 +424,98 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_publisherField.clear();
         managerBook_date.setValue(null);
         try {
-            setValueForManagerBookTableView();
-                    } catch (SQLException ex) {
+            SetValueMangagetBookAll();
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @FXML
-    private void setValueForManagerBookTableView() throws SQLException {
+     // Set value for comboBox
+    private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().addAll("None");
+        for(int i = 0; i < catalogList.size(); i++) {
+           comboBox.getItems().addAll(catalogList.get(i));
+        }
+        comboBox.getSelectionModel().select(model);
+    }
+    // Set value for BookTitles combobox
+    private void SetValueForBookTitlesCatalog() {
+        List<String> titleCatalogList = CatalogEntity.GetBookTitleList();
+        SetValueForComboBox(managerBook_bookTitleSearch, titleCatalogList, "Book Titles");
+    }
+    private void SetValueForBookGenreCatalog() {
+        List<String> genreCatalogList = CatalogEntity.GetGenreList();
+        SetValueForComboBox(managerBook_genreCombobox, genreCatalogList, "Genres");
+    }
+    private void SetValueForBookAuthorCatalog() {
+        List<String> authorCatalogList = CatalogEntity.GetAuhorList();
+        SetValueForComboBox(managerBook_authorsCombobox, authorCatalogList, "Authors");
+    }
+    @FXML 
+    private void SetValueManagerBookTableViewByCatalog() throws SQLException {
+         String titleCatalog = managerBook_bookTitleSearch.getValue();
+         String genreCatalog = managerBook_genreCombobox.getValue();
+         String authorCatalog = managerBook_authorsCombobox.getValue();
+        if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            SetValueMangagetBookAll();
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitle = BookEntity.GetDataBookByTitle(titleCatalog);
+            setValueForManagerBookTableView(dataBookByTitle);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndGenre = BookEntity.GetDataBookByTitleAndGenre(titleCatalog, genreCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndGenre);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndAuthor = BookEntity.GetDataBookByTitleAndAuthor(titleCatalog, authorCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndAuthor);
+            
+        }
+        else if((!titleCatalog.equals("Book Titles") && !titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByTitleAndGenreAndAuthor = BookEntity.GetDataBookByTitleAndGenreAndAuthor(titleCatalog, genreCatalog,authorCatalog);
+            setValueForManagerBookTableView(dataBookByTitleAndGenreAndAuthor);
+            
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByGenreAndAuthor = BookEntity.GetDataBookByGenreAndAuthor( genreCatalog,authorCatalog);
+            setValueForManagerBookTableView(dataBookByGenreAndAuthor);
+            
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (!genreCatalog.equals("Genres") && !genreCatalog.equals("None")) &&
+             (authorCatalog.equals("Authors") || authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByGenre = BookEntity.GetDataBookByGenre( genreCatalog);
+            setValueForManagerBookTableView(dataBookByGenre);
+             
+        }
+        else if((titleCatalog.equals("Book Titles") || titleCatalog.equals("None")) &&
+             (genreCatalog.equals("Genres") || genreCatalog.equals("None")) &&
+             (!authorCatalog.equals("Authors") && !authorCatalog.equals("None"))  ) {
+            ObservableList<Book> dataBookByAuthor = BookEntity.GetDataBookByAuthor( authorCatalog);
+            setValueForManagerBookTableView(dataBookByAuthor);
+           
+        }
+    }
+    @FXML void SetValueMangagetBookAll() throws SQLException {
         ObservableList<Book> bookDataList = BookEntity.GetDataBooks();
+        setValueForManagerBookTableView(bookDataList);
+    }
+    private void setValueForManagerBookTableView(ObservableList<Book> bookDataList) {
+        //setvalue for table
         managerBook_bookTitleTable.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         managerBook_genreTable.setCellValueFactory(new PropertyValueFactory<>("genre"));
         managerBook_bookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
@@ -401,6 +525,118 @@ public class FXMLDashBoardConstroller implements Initializable {
         managerBook_totalBookTable.setCellValueFactory(new PropertyValueFactory<>("totalBook"));
         managerBook_availableBookTable.setCellValueFactory(new PropertyValueFactory<>("availBook"));
         managerBook_tableView.setItems(bookDataList);
+    }
+    /*
+        Initialize selectedBook
+    */
+    private Book selectedBook = null;  
+    /*
+        Initialize selectedBook
+    */
+    @FXML
+    private void SelectBook() {
+        selectedBook = managerBook_tableView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!!!");
+        alert.setHeaderText("Selected Book successfully!!!");
+        alert.setContentText("Book is selected: " + selectedBook.getBookTitle());
+        alert.showAndWait();
+        SetValueForUpdateForm();
+        System.out.print(selectedBook.getBookID());
        
     }
+
+    private void SetValueForUpdateForm() {
+        if(selectedBook != null) {
+            managerBook_bookTitle.setText(selectedBook.getBookTitle());
+            managerBook_author.setText(selectedBook.getBookAuthor());
+            managerBook_stock.setText(selectedBook.getTotalBook().toString());
+            managerBook_genre.setText(selectedBook.getGenre());
+            managerBook_publisherField.setText(selectedBook.getPublisher());
+            Date sqlDate = (Date) selectedBook.getPublicationDate();
+            LocalDate localDate = sqlDate.toLocalDate();
+            managerBook_date.setValue(localDate);
+        }
+    }
+    // RESET FORM
+    @FXML
+    private void ResetForm() {
+        managerBook_bookTitle.clear();
+        managerBook_author.clear();
+        managerBook_stock.clear();
+        managerBook_genre.clear();
+        managerBook_publisherField.clear();
+        managerBook_date.setValue(null);
+        selectedBook = null;
+    }
+    // Update FORM
+    @FXML
+    private void UpdateBook() {
+        if (selectedBook != null) {
+            try {
+                // Lấy giá trị từ các trường nhập liệu
+                String title = managerBook_bookTitle.getText();
+                String author = managerBook_author.getText();
+                Integer totalBook = Integer.valueOf(managerBook_stock.getText());
+                String genre = managerBook_genre.getText();
+                String publisher = managerBook_publisherField.getText();
+                LocalDate pubLocalDate = managerBook_date.getValue();
+                Date sqlDate = Date.valueOf(pubLocalDate);
+
+                // Tạo đối tượng Book với dữ liệu mới
+                Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
+
+                // Cập nhật trong cơ sở dữ liệu
+                BookEntity.UpdateBook(updateBook, selectedBook);
+                System.out.println("Book ID: " + selectedBook.getBookID());
+
+                // Cập nhật bảng dữ liệu
+                SetValueMangagetBookAll();
+
+                // Hiển thị thông báo thành công
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success!!!");
+                alert.setHeaderText("Update Book successfully!!!");
+                alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
+                alert.showAndWait();
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường số)
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Input");
+                alert.setContentText("Please enter valid numbers for stock.");
+                alert.showAndWait();
+            } catch (SQLException ex) {
+                // Xử lý lỗi cơ sở dữ liệu
+                Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error", ex);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Database Error");
+                alert.setContentText("Failed to update book in the database.");
+                alert.showAndWait();
+            }
+        } else {
+            System.out.println("Selected book is null");
+        }
+    }
+
+    @FXML
+    private void DeleteBook() {
+        if(selectedBook!= null) {
+            int deletedBookID = selectedBook.getBookID();
+            BookEntity.DeleteBook(deletedBookID);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success!!!");
+            alert.setHeaderText("Delete Book successfully!!!");
+            alert.setContentText("Book is deleted: " + selectedBook.getBookTitle());
+            alert.showAndWait();
+            try {
+            SetValueMangagetBookAll();
+            } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+
 } 
