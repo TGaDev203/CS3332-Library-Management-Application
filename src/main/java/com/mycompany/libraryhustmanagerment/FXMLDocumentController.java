@@ -83,12 +83,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label title;
 
+    @FXML
+    private AnchorPane rootPane;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         title.setText("Edit your information");
-        // Set default visibility
         signIn_form.setVisible(true);
         signup_form.setVisible(false);
+        setupWindowDragging();
     }
 
     @FXML
@@ -167,6 +173,19 @@ public class FXMLDocumentController implements Initializable {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private void setupWindowDragging() {
+        rootPane.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        rootPane.setOnMouseDragged((MouseEvent event) -> {
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
     }
 
     Account userLogin = null;

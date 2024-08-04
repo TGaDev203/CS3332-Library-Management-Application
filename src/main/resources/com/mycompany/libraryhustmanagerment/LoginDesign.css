@@ -1,5 +1,5 @@
 .bg-form {
-    /* -fx-background-image: url("../Images/Background1.jpg"); */
+    -fx-background-image: url("../Images/Background1.jpg");
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;

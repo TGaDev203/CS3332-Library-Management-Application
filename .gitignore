@@ -34,8 +34,6 @@ nbactions.xml
 
 # Documentation and images
 *.docx
-*.jpg
-*.png
 
 # Local configuration files
 src/main/resources/db.properties
