@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="signIn_form" layoutY="-32.8" prefHeight="535.0" prefWidth="197.0" stylesheets="@LoginDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -52,7 +52,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" />
                </graphic>
             </Button>
-            <Button fx:id="signup_minimize" layoutX="658.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
+            <Button fx:id="signup_minimize" layoutX="655.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                </graphic>

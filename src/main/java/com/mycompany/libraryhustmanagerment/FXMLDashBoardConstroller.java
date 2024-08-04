@@ -428,15 +428,21 @@ public class FXMLDashBoardConstroller implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
      // Set value for comboBox
     private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().clear();
         comboBox.getItems().addAll("None");
         for(int i = 0; i < catalogList.size(); i++) {
            comboBox.getItems().addAll(catalogList.get(i));
         }
         comboBox.getSelectionModel().select(model);
     }
+    
     // Set value for BookTitles combobox
     private void SetValueForBookTitlesCatalog() {
         List<String> titleCatalogList = CatalogEntity.GetBookTitleList();
@@ -618,6 +624,10 @@ public class FXMLDashBoardConstroller implements Initializable {
         } else {
             System.out.println("Selected book is null");
         }
+        //Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     @FXML
@@ -636,6 +646,10 @@ public class FXMLDashBoardConstroller implements Initializable {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+         //Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
     
 
