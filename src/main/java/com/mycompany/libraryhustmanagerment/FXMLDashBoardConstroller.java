@@ -30,7 +30,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import models.Account;
@@ -43,9 +42,6 @@ import models.BorrowBook;
  * @author Legion
  */
 public class FXMLDashBoardConstroller implements Initializable {
-    @FXML
-    private AnchorPane anchorRoot;
-
     @FXML
     private Button accountBtn;
 
@@ -157,8 +153,8 @@ public class FXMLDashBoardConstroller implements Initializable {
     @FXML
     private Label login_username;
 
-    @FXML
-    private AnchorPane main_form;
+    // @FXML
+    // private AnchorPane main_form;
 
     @FXML
     private Button managerBook_SearchBtn;
@@ -304,37 +300,10 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        main_form.setOnMousePressed(this::handleMousePressed);
 
-        // Đặt sự kiện cho khi kéo chuột
-        main_form.setOnMouseDragged(this::handleMouseDragged);
-        DisplayUser();
-        try {
-            SetValueMangagetBookAll();
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
-        }
         SetValueForBookTitlesCatalog();
         SetValueForBookGenreCatalog();
         SetValueForBookAuthorCatalog();
-    }
-
-    //
-    private double xOffset = 0;
-    private double yOffset = 0;
-
-    private void handleMousePressed(MouseEvent event) {
-        // Ghi lại tọa độ chuột
-        xOffset = event.getSceneX();
-        yOffset = event.getSceneY();
-    }
-
-    private void handleMouseDragged(MouseEvent event) {
-        // Tính toán sự dịch chuyển và thay đổi vị trí của pane
-        double newX = event.getScreenX() - xOffset;
-        double newY = event.getScreenY() - yOffset;
-        main_form.getScene().getWindow().setX(newX);
-        main_form.getScene().getWindow().setY(newY);
     }
 
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
