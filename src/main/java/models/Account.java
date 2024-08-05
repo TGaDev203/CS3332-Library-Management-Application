@@ -15,7 +15,6 @@ public class Account {
     private String password;
     private String role;
 
-    // Constructor
     public Account(Integer accountId, String name, String emailAddress, String phoneNumber, String password,
             String role) {
         this.accountId = accountId;
@@ -29,7 +28,6 @@ public class Account {
     public Account() {
     }
 
-    // Getters and Setters
     public Integer GetAccountId() {
         return accountId;
     }
