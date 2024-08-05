@@ -108,9 +108,9 @@
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="managerBook_bookTitle" layoutX="106.0" layoutY="27.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
-                              <TextField fx:id="managerBook_genre" layoutX="110.0" layoutY="203.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
-                              <Label layoutX="6.0" layoutY="324.0" prefHeight="18.0" prefWidth="110.0" text="Publication Date:">
+                              <TextField fx:id="managerBook_bookTitle" layoutX="107.0" layoutY="27.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
+                              <TextField fx:id="managerBook_genre" layoutX="108.0" layoutY="203.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
+                              <Label layoutX="5.0" layoutY="324.0" prefHeight="18.0" prefWidth="110.0" text="Publication Date:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
@@ -124,7 +124,7 @@
                               <Button fx:id="managerBook_addBtn" layoutX="41.0" layoutY="371.0" mnemonicParsing="false" onAction="#AddBook" prefHeight="42.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Add" />
                               <Button fx:id="managerBook_resetBtn" layoutX="41.0" layoutY="434.0" mnemonicParsing="false" onAction="#ResetForm" prefHeight="42.0" prefWidth="77.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Reset" textFill="#c1cc76" />
                               <Button fx:id="managerBook_deleteBtn" layoutX="151.0" layoutY="434.0" mnemonicParsing="false" onAction="#DeleteBook" prefHeight="42.0" prefWidth="77.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" textFill="#d97d75" />
-                              <TextField fx:id="managerBook_publisherField" layoutX="110.0" layoutY="257.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
+                              <TextField fx:id="managerBook_publisherField" layoutX="108.0" layoutY="257.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
                               <Label layoutX="32.0" layoutY="266.0" prefHeight="16.0" prefWidth="62.0" text="Publisher:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -141,7 +141,7 @@
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="managerBook_stock" layoutX="107.0" layoutY="145.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
+                              <TextField fx:id="managerBook_stock" layoutX="108.0" layoutY="145.0" prefHeight="35.0" prefWidth="140.0" styleClass="textField" stylesheets="@designDashboard.css" />
                               <Button fx:id="managerBook_updateBtn" layoutX="151.0" layoutY="371.0" mnemonicParsing="false" onAction="#UpdateBook" prefHeight="42.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Update" />
                            </children>
                         </AnchorPane>
