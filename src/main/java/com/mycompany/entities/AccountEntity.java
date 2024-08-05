@@ -82,7 +82,7 @@ public class AccountEntity extends BaseEntity {
             statement.setString(4, updateAccount.GetPassword());
             statement.setInt(5, updateAccount.GetAccountId());
 
-            int rowsAffected = statement.executeUpdate(); // Changed to executeUpdate for update operations
+            int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
                 Logger.getLogger(AccountEntity.class.getName()).log(Level.WARNING,
                         "No account found with id: " + updateAccount.GetAccountId());

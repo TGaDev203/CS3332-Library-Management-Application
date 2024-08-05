@@ -55,7 +55,28 @@ import models.BorrowBook;
  */
 public class FXMLDashBoardConstroller implements Initializable {
     @FXML
-    private AnchorPane rootPane;
+    private TableView<Account> account_accountTableView;
+
+    @FXML
+    private TableColumn<Account, Integer> account_accountIdColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_roleColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_nameColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_emailAddressColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_phoneNumberColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_passwordColumn;
+
+    @FXML
+    private AnchorPane account_form;
 
     @FXML
     private Button accountBtn;
@@ -89,9 +110,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private TextField account_password;
-
-    @FXML
-    private TableColumn<Account, Integer> account_ageTable;
 
     @FXML
     private Button account_deleteBtn;
@@ -280,28 +298,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button minimize_btn;
 
     @FXML
+    private AnchorPane rootPane;
+
+    @FXML
     private Button signout_btn;
-
-    @FXML
-    private TableView<Account> account_accountTableView;
-
-    @FXML
-    private TableColumn<Account, Integer> account_accountIdColumn;
-
-    @FXML
-    private TableColumn<Account, String> account_nameColumn;
-
-    @FXML
-    private TableColumn<Account, String> account_emailAddressColumn;
-
-    @FXML
-    private TableColumn<Account, String> account_phoneNumberColumn;
-
-    @FXML
-    private TableColumn<Account, String> account_passwordColumn;
-
-    @FXML
-    private AnchorPane account_form;
 
     @FXML
     private void dasboard_form_close() {
@@ -419,7 +419,9 @@ public class FXMLDashBoardConstroller implements Initializable {
                 .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetPhoneNumber()));
         account_passwordColumn
                 .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetPassword()));
-        showAllAccountsInTable();
+        account_roleColumn
+                .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetRole()));
+        ShowAllAccountsInTable();
     }
 
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
@@ -681,7 +683,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     @FXML
-    private void signOut() throws IOException {
+    private void SignOut() throws IOException {
         boolean signOutConfirmed = showConfirmationAlert("Confirm Sign Out", "Are you sure you want to sign out?",
                 "Please confirm if you want to sign out.");
 
@@ -701,13 +703,13 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     @FXML
-    private void showAllAccountsInTable() {
+    private void ShowAllAccountsInTable() {
         List<Account> accounts = AccountEntity.ShowAllAccounts();
         account_accountTableView.getItems().setAll(accounts);
     }
 
     @FXML
-    private void selectAccount() {
+    private void SelectAccount() {
         Account selectedAccount = account_accountTableView.getSelectionModel().getSelectedItem();
 
         if (selectedAccount != null) {
@@ -722,8 +724,8 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     @FXML
-    private void handleUpdateAccount() {
-        if (!validateAccountFields()) {
+    private void HandleUpdateAccount() {
+        if (!ValidateAccountFields()) {
             showAlert("Error", "Invalid Input", "Please ensure all fields are filled in correctly.");
             return;
         }
@@ -738,24 +740,31 @@ public class FXMLDashBoardConstroller implements Initializable {
         try {
             AccountEntity.UpdateAccount(account);
             showAlert("Success!", "Account Updated", "The account has been successfully updated.");
-            refreshAccountTableView();
+            RefreshAccountTableView();
         } catch (SQLException e) {
             showAlert("Error", "Update Failed", "An error occurred while updating the account.");
             e.printStackTrace();
         }
-        clearFields();
+        ClearFields();
     }
 
     @FXML
-    private void handleDeleteAccount() {
+    private void HandleDeleteAccount() {
         int accountId = Integer.parseInt(account_accountID.getText());
 
         try {
+            Account account = AccountEntity.GetDataAccountById(accountId);
+
+            if (account != null && "Librarian".equals(account.GetRole())) {
+                showAlert("Error", "Delete Failed", "Cannot delete an account with the role 'Librarian'.");
+                return;
+            }
+
             if (showConfirmationAlert("Delete Account", "Confirm Delete",
                     "Are you sure you want to delete this account?")) {
                 AccountEntity.DeleteAccount(accountId);
                 showAlert("Success!", "Account Deleted", "The account has been successfully deleted.");
-                refreshAccountTableView();
+                RefreshAccountTableView();
             }
         } catch (SQLException e) {
             showAlert("Error", "Delete Failed", "An error occurred while deleting the account.");
@@ -764,7 +773,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     @FXML
-    private void refreshAccountTableView() {
+    private void RefreshAccountTableView() {
         try {
             ObservableList<Account> accounts = AccountEntity.GetAllAccounts();
             account_accountTableView.setItems(accounts);
@@ -775,7 +784,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     @FXML
-    private void handleSearchByAccountId() {
+    private void HandleSearchByAccountId() {
         String idText = account_searchByUserID.getText();
 
         if (idText.isEmpty()) {
@@ -805,16 +814,27 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
 
-    private boolean validateAccountFields() {
-        return !account_accountID.getText().isEmpty() &&
-                !account_name.getText().isEmpty() &&
-                !account_emailAddress.getText().isEmpty() &&
-                !account_phoneNumber.getText().isEmpty() &&
-                !account_password.getText().isEmpty();
+    private boolean ValidateAccountFields() {
+        // Kiểm tra xem các trường không bị bỏ trống
+        if (account_accountID.getText().isEmpty() ||
+                account_name.getText().isEmpty() ||
+                account_emailAddress.getText().isEmpty() ||
+                account_phoneNumber.getText().isEmpty() ||
+                account_password.getText().isEmpty()) {
+            return false;
+        }
+
+        // Kiểm tra tính hợp lệ của từng trường
+        boolean isValidAccountId = Account.validateAccountId(account_accountID.getText());
+        boolean isValidPhoneNumber = Account.validatePhoneNumber(account_phoneNumber.getText());
+        boolean isValidEmailAddress = Account.validateEmailAddress(account_emailAddress.getText());
+        boolean isValidPassword = Account.validatePasswordHash(account_password.getText());
+
+        return isValidAccountId && isValidPhoneNumber && isValidEmailAddress && isValidPassword;
     }
 
     @FXML
-    private void clearFields() {
+    private void ClearFields() {
         account_accountID.clear();
         account_name.clear();
         account_emailAddress.clear();

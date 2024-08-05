@@ -73,7 +73,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="USERS" />
                      </graphic>
                   </Button>
-                  <Button fx:id="signout_btn" layoutX="34.0" layoutY="501.0" mnemonicParsing="false" onAction="#signOut" styleClass="signout" stylesheets="@designDashboard.css">
+                  <Button fx:id="signout_btn" layoutX="34.0" layoutY="501.0" mnemonicParsing="false" onAction="#SignOut" styleClass="signout" stylesheets="@designDashboard.css">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.8em" wrappingWidth="16.857162475585938" />
                      </graphic>
@@ -309,9 +309,9 @@
                      <children>
                         <AnchorPane layoutX="-4.0" layoutY="10.0" prefHeight="516.0" prefWidth="254.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
-                              <Button fx:id="account_ResetBtn" layoutX="145.0" layoutY="399.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="42.0" prefWidth="92.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Reset" textFill="#d97d75" />
-                              <Button fx:id="account_deleteBtn" layoutX="17.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleDeleteAccount" prefHeight="42.0" prefWidth="95.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
-                              <Button fx:id="account_Update" layoutX="18.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleUpdateAccount" prefHeight="42.0" prefWidth="92.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Update" textFill="#d97d75" />
+                              <Button fx:id="account_ResetBtn" layoutX="145.0" layoutY="399.0" mnemonicParsing="false" onAction="#ClearFields" prefHeight="42.0" prefWidth="92.0" styleClass="update-btn" stylesheets="@designDashboard.css" text="Reset" textFill="#d97d75" />
+                              <Button fx:id="account_deleteBtn" layoutX="17.0" layoutY="459.0" mnemonicParsing="false" onAction="#HandleDeleteAccount" prefHeight="42.0" prefWidth="95.0" styleClass="delete-btn" stylesheets="@designDashboard.css" text="Delete" />
+                              <Button fx:id="account_Update" layoutX="18.0" layoutY="400.0" mnemonicParsing="false" onAction="#HandleUpdateAccount" prefHeight="42.0" prefWidth="92.0" styleClass="add-btn" stylesheets="@designDashboard.css" text="Update" textFill="#d97d75" />
                               <Label layoutX="6.0" layoutY="39.0" prefHeight="18.0" prefWidth="75.0" text="Account ID:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -346,20 +346,21 @@
                         </AnchorPane>
                         <AnchorPane layoutX="253.0" layoutY="10.0" prefHeight="516.0" prefWidth="632.0" styleClass="bg-white" stylesheets="@designDashboard.css">
                            <children>
-                              <TableView fx:id="account_accountTableView" layoutX="7.0" layoutY="67.0" prefHeight="450.0" prefWidth="624.0" styleClass="table-view" stylesheets="@designDashboard.css">
+                              <TableView fx:id="account_accountTableView" layoutX="7.0" layoutY="67.0" prefHeight="450.0" prefWidth="665.0" styleClass="table-view" stylesheets="@designDashboard.css">
                                  <columns>
                                     <TableColumn fx:id="account_accountIdColumn" prefWidth="94.39999389648438" text="Account ID" />
                                     <TableColumn fx:id="account_nameColumn" prefWidth="128.79998779296875" text="Name" />
                                     <TableColumn fx:id="account_emailAddressColumn" prefWidth="117.60003662109375" text="Email" />
-                                    <TableColumn fx:id="account_phoneNumberColumn" prefWidth="126.40008544921875" text="Phone Number" />
-                                    <TableColumn fx:id="account_passwordColumn" prefWidth="153.59979248046875" text="Password" />
+                                    <TableColumn fx:id="account_phoneNumberColumn" prefWidth="129.0" text="Phone Number" />
+                                    <TableColumn fx:id="account_passwordColumn" prefWidth="99.0" text="Password" />
+                                    <TableColumn fx:id="account_roleColumn" prefWidth="94.0" text="Role" />
                                  </columns>
                               </TableView>
                               <TextField fx:id="account_searchByUserID" layoutX="8.0" layoutY="16.0" prefHeight="34.0" prefWidth="154.0" promptText="Search By AccountID" styleClass="search" stylesheets="@designDashboard.css" />
                               <FontAwesomeIconView glyphName="SEARCH" layoutX="13.0" layoutY="38.0" size="1.4em" />
-                              <Button fx:id="account_selectAccount" layoutX="507.0" layoutY="10.0" mnemonicParsing="false" onAction="#selectAccount" prefHeight="44.0" prefWidth="120.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Select Account" textFill="#c1cc76" />
-                              <Button layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSearchByAccountId" prefHeight="44.0" prefWidth="65.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Search" textFill="#c1cc76" />
-                              <Button layoutX="257.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshAccountTableView" prefHeight="44.0" prefWidth="90.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Refresh" textFill="#c1cc76" />
+                              <Button fx:id="account_selectAccount" layoutX="537.0" layoutY="10.0" mnemonicParsing="false" onAction="#SelectAccount" prefHeight="44.0" prefWidth="120.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Select Account" textFill="#c1cc76" />
+                              <Button layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#HandleSearchByAccountId" prefHeight="44.0" prefWidth="65.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Search" textFill="#c1cc76" />
+                              <Button layoutX="257.0" layoutY="10.0" mnemonicParsing="false" onAction="#RefreshAccountTableView" prefHeight="44.0" prefWidth="90.0" styleClass="reset-btn" stylesheets="@designDashboard.css" text="Refresh" textFill="#c1cc76" />
                            </children>
                         </AnchorPane>
                      </children>
