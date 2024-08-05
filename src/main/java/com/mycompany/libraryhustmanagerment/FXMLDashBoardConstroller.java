@@ -426,6 +426,14 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
         
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        if(BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
         BookEntity.AddBook(newBook);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success!!!");
