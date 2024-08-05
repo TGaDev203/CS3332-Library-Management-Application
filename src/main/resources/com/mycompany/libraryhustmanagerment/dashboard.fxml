@@ -58,7 +58,7 @@
                         <Font name="Microsoft Sans Serif" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="managerBook_btn" layoutX="6.0" layoutY="225.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="62.0" prefWidth="181.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Books Managerment">
+                  <Button fx:id="managerBook_btn" layoutX="6.0" layoutY="225.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="62.0" prefWidth="181.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Books Management">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SERVER" />
                      </graphic>
@@ -68,7 +68,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="EDIT" />
                      </graphic>
                   </Button>
-                  <Button fx:id="accountBtn" layoutX="5.0" layoutY="370.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="51.0" prefWidth="182.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Account Managerment">
+                  <Button fx:id="accountBtn" layoutX="5.0" layoutY="370.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="51.0" prefWidth="182.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Account Management">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="USERS" />
                      </graphic>
@@ -146,7 +146,7 @@
                                 <columns>
                                     <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
                                   <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
-                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Gerne" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Genre" />
                                     <TableColumn fx:id="managerBook_authorTable" prefWidth="111.0" text="Authors" />
                                     <TableColumn fx:id="managerBook_publisherTable" prefWidth="72.0" text="Publisher" />
                                     <TableColumn fx:id="managerBook_publicationDate" prefWidth="99.0" text="Publication Date" />

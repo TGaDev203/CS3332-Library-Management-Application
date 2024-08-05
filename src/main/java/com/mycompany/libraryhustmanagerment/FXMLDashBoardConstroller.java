@@ -407,8 +407,23 @@ public class FXMLDashBoardConstroller implements Initializable {
         if(checkStringNotNULL("Publisher", managerBook_publisherField)) {
             publisher = managerBook_publisherField.getText();
         }
-        LocalDate selectedDate = managerBook_date.getValue(); 
-        Date publicationDate = Date.valueOf(selectedDate);
+        // Date public
+        LocalDate selectedDate = managerBook_date.getValue();
+        Date publicationDate = null;
+        if (selectedDate != null) {
+        // Chuyển đổi LocalDate sang java.sql.Date
+        publicationDate = Date.valueOf(selectedDate);
+        
+        // Tiếp tục xử lý với publicationDate
+        // ...
+        } else {
+        // Hiển thị thông báo lỗi nếu selectedDate là null
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose a publication date.");
+            alert.showAndWait();
+        }
         
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
         BookEntity.AddBook(newBook);
