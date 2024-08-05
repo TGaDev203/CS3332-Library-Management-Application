@@ -53,7 +53,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login_username" alignment="CENTER" layoutX="3.0" layoutY="143.0" prefHeight="18.0" prefWidth="190.0" text="User Name" textFill="WHITE">
+                  <Label fx:id="login_accountId" alignment="CENTER" layoutX="3.0" layoutY="143.0" prefHeight="18.0" prefWidth="190.0" text="Account ID" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="20.0" />
                      </font>
@@ -73,7 +73,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="USERS" />
                      </graphic>
                   </Button>
-                  <Button fx:id="signout_btn" layoutX="19.0" layoutY="466.0" mnemonicParsing="false" styleClass="signout" stylesheets="@designDashboard.css">
+                  <Button fx:id="signout_btn" layoutX="19.0" layoutY="466.0" mnemonicParsing="false" onAction="#signOut" styleClass="signout" stylesheets="@designDashboard.css">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.8em" wrappingWidth="16.857162475585938" />
                      </graphic>

@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List; // Ensure this import
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +21,14 @@ import com.mycompany.entities.CatalogEntity;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -32,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.Account;
 import models.Book;
 import models.BorrowBook;
@@ -42,6 +49,9 @@ import models.BorrowBook;
  * @author Legion
  */
 public class FXMLDashBoardConstroller implements Initializable {
+    @FXML
+    private AnchorPane rootPane;
+
     @FXML
     private Button accountBtn;
 
@@ -148,10 +158,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     private AnchorPane dasboard_form;
 
     @FXML
-    private Label login_role_of_user;
+    private Label login_role;
 
     @FXML
-    private Label login_username;
+    private Label login_accountId;
 
     // @FXML
     // private AnchorPane main_form;
@@ -275,6 +285,20 @@ public class FXMLDashBoardConstroller implements Initializable {
         stage.setIconified(true);
     }
 
+    // private void getUserNameAndRole() {
+    // Account account = new Account();
+
+    // login_accountId.setText(account.GetAccountId().toString());
+
+    // String getUserRole = account.GetRole();
+
+    // if (getUserRole == null) {
+    // return;
+    // }
+
+    // login_role.setText("Your role: " + getUserRole);
+    // }
+
     @FXML
     private void switchForm(ActionEvent event) throws IOException {
         if (event.getSource() == managerBook_btn) {
@@ -293,9 +317,31 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
 
+    private void showAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private boolean showConfirmationAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
     @FXML
-    private void DisplayUser() {
-        login_username.setText("XH");
+    private void UpdateUI() {
+        Account account = new Account();
+        if (account != null) {
+            login_accountId.setText(account.GetAccountId().toString());
+            // login_accountId.setText("XH");
+        }
     }
 
     @Override
@@ -311,19 +357,11 @@ public class FXMLDashBoardConstroller implements Initializable {
             if (!textField.getText().equals("")) {
                 return true;
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error!!!");
-                alert.setHeaderText("Add Book Failure!!!");
-                alert.setContentText(nameOfObject + " not NULL, please try again!!!");
-                alert.showAndWait();
+                showAlert("Error!", "Add Book Failure!", " not NULL, please try again!");
                 return false;
             }
         } catch (NumberFormatException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("Add Book Failure!!!");
-            alert.setContentText(nameOfObject + " not NULL, please try again!!!");
-            alert.showAndWait();
+            showAlert("Error!", "Add Book Failure!", nameOfObject + " not NULL, please try again!");
             return false;
         }
     }
@@ -345,19 +383,12 @@ public class FXMLDashBoardConstroller implements Initializable {
             if (Book.IsValidStock(managerBook_stock.getText())) {
                 stock = Integer.valueOf(managerBook_stock.getText());
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error!!!");
-                alert.setHeaderText("Add Book Failure!!!");
-                alert.setContentText("Stock must be a positive point number, please try again!!!");
-                alert.showAndWait();
+                showAlert("Error!", "Add Book Failure!",
+                        "Stock must be a positive point number, please try again!");
                 return;
             }
         } catch (NumberFormatException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!!!");
-            alert.setHeaderText("Add Book Failure!!!");
-            alert.setContentText("Stock must be a positive point number, please try again!!!");
-            alert.showAndWait();
+            showAlert("Error!", "Add Book Failure!", "Stock must be a positive point number, please try again!");
             return;
         }
         String genre = null;
@@ -373,11 +404,7 @@ public class FXMLDashBoardConstroller implements Initializable {
 
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
         BookEntity.AddBook(newBook);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success!!!");
-        alert.setHeaderText("Book is added successfully!!!");
-        alert.setContentText("Book added is: " + newBook.getBookTitle());
-        alert.showAndWait();
+        showAlert("Success!", "Book is added successfully!", "Book added is: " + newBook.getBookTitle());
         managerBook_bookTitle.clear();
         managerBook_author.clear();
         managerBook_stock.clear();
@@ -504,11 +531,7 @@ public class FXMLDashBoardConstroller implements Initializable {
     @FXML
     private void SelectBook() {
         selectedBook = managerBook_tableView.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success!!!");
-        alert.setHeaderText("Selected Book successfully!!!");
-        alert.setContentText("Book is selected: " + selectedBook.getBookTitle());
-        alert.showAndWait();
+        showAlert("Success!", "Selected Book successfully!", "Book is selected: " + selectedBook.getBookTitle());
         SetValueForUpdateForm();
         System.out.print(selectedBook.getBookID());
 
@@ -544,7 +567,6 @@ public class FXMLDashBoardConstroller implements Initializable {
     private void UpdateBook() {
         if (selectedBook != null) {
             try {
-                // Lấy giá trị từ các trường nhập liệu
                 String title = managerBook_bookTitle.getText();
                 String author = managerBook_author.getText();
                 Integer totalBook = Integer.valueOf(managerBook_stock.getText());
@@ -553,39 +575,21 @@ public class FXMLDashBoardConstroller implements Initializable {
                 LocalDate pubLocalDate = managerBook_date.getValue();
                 Date sqlDate = Date.valueOf(pubLocalDate);
 
-                // Tạo đối tượng Book với dữ liệu mới
                 Book updateBook = new Book(title, genre, author, totalBook, publisher, sqlDate);
 
-                // Cập nhật trong cơ sở dữ liệu
                 BookEntity.UpdateBook(updateBook, selectedBook);
                 System.out.println("Book ID: " + selectedBook.getBookID());
 
-                // Cập nhật bảng dữ liệu
                 SetValueMangagetBookAll();
 
-                // Hiển thị thông báo thành công
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success!!!");
-                alert.setHeaderText("Update Book successfully!!!");
-                alert.setContentText("Book is updated: " + selectedBook.getBookTitle());
-                alert.showAndWait();
+                showAlert("Success!", "Update Book successfully!",
+                        "Book is updated: " + selectedBook.getBookTitle());
             } catch (NumberFormatException e) {
-                // Xử lý lỗi định dạng số (ví dụ: khi người dùng nhập không phải số vào trường
-                // số)
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid Input");
-                alert.setContentText("Please enter valid numbers for stock.");
-                alert.showAndWait();
+                showAlert("Error", "Invalid Input", "Please enter valid numbers for stock.");
             } catch (SQLException ex) {
-                // Xử lý lỗi cơ sở dữ liệu
                 Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, "Database update error",
                         ex);
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Database Error");
-                alert.setContentText("Failed to update book in the database.");
-                alert.showAndWait();
+                showAlert("Error", "Database Error", "Failed to update book in the database.");
             }
         } else {
             System.out.println("Selected book is null");
@@ -597,11 +601,7 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (selectedBook != null) {
             int deletedBookID = selectedBook.getBookID();
             BookEntity.DeleteBook(deletedBookID);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success!!!");
-            alert.setHeaderText("Delete Book successfully!!!");
-            alert.setContentText("Book is deleted: " + selectedBook.getBookTitle());
-            alert.showAndWait();
+            showAlert("Success!", "Delete Book successfully!", "Book is deleted: " + selectedBook.getBookTitle());
             try {
                 SetValueMangagetBookAll();
             } catch (SQLException ex) {
@@ -610,4 +610,23 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
 
+    @FXML
+    private void signOut() throws IOException {
+        boolean signOutConfirmed = showConfirmationAlert("Confirm Sign Out", "Are you sure you want to sign out?",
+                "Please confirm if you want to sign out.");
+
+        if (signOutConfirmed) {
+            Account account = new Account();
+            rootPane.getScene().getWindow().hide();
+            account.SetAccountId(null);
+            account.SetPassword(null);
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
 }
