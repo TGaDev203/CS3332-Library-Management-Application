@@ -26,6 +26,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,6 +39,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -718,6 +720,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             account_emailAddress.setText(selectedAccount.GetEmailAddress());
             account_phoneNumber.setText(selectedAccount.GetPhoneNumber());
             account_password.setText(selectedAccount.GetPassword());
+            LockTextFieldWithTooltip(account_accountID);
         } else {
             showAlert("Selection Error", "No Account Selected", "Please select an account from the list.");
         }
@@ -815,7 +818,6 @@ public class FXMLDashBoardConstroller implements Initializable {
     }
 
     private boolean ValidateAccountFields() {
-        // Kiểm tra xem các trường không bị bỏ trống
         if (account_accountID.getText().isEmpty() ||
                 account_name.getText().isEmpty() ||
                 account_emailAddress.getText().isEmpty() ||
@@ -824,7 +826,6 @@ public class FXMLDashBoardConstroller implements Initializable {
             return false;
         }
 
-        // Kiểm tra tính hợp lệ của từng trường
         boolean isValidAccountId = Account.validateAccountId(account_accountID.getText());
         boolean isValidPhoneNumber = Account.validatePhoneNumber(account_phoneNumber.getText());
         boolean isValidEmailAddress = Account.validateEmailAddress(account_emailAddress.getText());
@@ -841,4 +842,22 @@ public class FXMLDashBoardConstroller implements Initializable {
         account_phoneNumber.clear();
         account_password.clear();
     }
+
+    private void LockTextFieldWithTooltip(TextField textField) {
+        textField.setEditable(false);
+
+        Tooltip tooltip = new Tooltip("Cannot edit Account ID for security reasons.");
+
+        // Tạo CSS cho tooltip
+        tooltip.setStyle(
+                "-fx-font-size: 14px; -fx-text-fill: #fff; -fx-background-color: #000; -fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;");
+
+        textField.setOnMouseEntered(event -> {
+            Bounds boundsInScreen = textField.localToScreen(textField.getBoundsInLocal());
+            tooltip.show(textField, boundsInScreen.getMinX(), boundsInScreen.getMinY() - 50);
+        });
+
+        textField.setOnMouseExited(event -> tooltip.hide());
+    }
+
 }
