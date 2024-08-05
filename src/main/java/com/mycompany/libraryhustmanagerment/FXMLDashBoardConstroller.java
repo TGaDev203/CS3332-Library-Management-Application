@@ -335,12 +335,17 @@ public class FXMLDashBoardConstroller implements Initializable {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    @FXML
+    private Account account;
+
+    public void SetAccountIdAndRole(Account account) {
+        this.account = account;
+        UpdateUI();
+    }
+
     private void UpdateUI() {
-        Account account = new Account();
         if (account != null) {
             login_accountId.setText(account.GetAccountId().toString());
-            // login_accountId.setText("XH");
+            login_role.setText(account.GetRole());
         }
     }
 

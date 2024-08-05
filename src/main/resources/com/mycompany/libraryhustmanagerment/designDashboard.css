@@ -268,3 +268,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .combo-box .combo-box-cell:hover {
     -fx-background-color: #388E3C; /* Màu nền khi hover */
 }
+
+.custom-style {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+}

@@ -149,11 +149,17 @@ public class FXMLDocumentController implements Initializable {
         });
     }
 
-    private void switchToDashBoard() throws IOException {
-        signinbtn.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+    private void switchToDashBoard(Account userLogin) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+        Parent root = loader.load();
+
+        FXMLDashBoardConstroller dashboardController = loader.getController();
+
+        dashboardController.SetAccountIdAndRole(userLogin);
+
         Stage stage = new Stage();
         Scene scene = new Scene(root);
+
         root.setOnMousePressed((MouseEvent event) -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -172,6 +178,8 @@ public class FXMLDocumentController implements Initializable {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
+
+        signinbtn.getScene().getWindow().hide();
     }
 
     private void errorLogin() {
@@ -202,7 +210,7 @@ public class FXMLDocumentController implements Initializable {
             }
         } catch (NumberFormatException ex) {
             showAlert("Error!", "Cannot Register!",
-                    "Account ID must be a number, please try again!");
+                    "Account ID must be HUST ID, please try again!");
         }
     }
 
@@ -220,8 +228,8 @@ public class FXMLDocumentController implements Initializable {
 
         if (userLogin != null && userLogin.GetPassword().equals(passwordText)) {
             showAlert("Successfully!", "Log In Successfully!",
-                    "Account " + userLogin.GetAccountId() + " is logged in!");
-            switchToDashBoard();
+                    "Account " + userLogin.GetAccountId() + " has been logged in!");
+            switchToDashBoard(userLogin);
         } else {
             errorLogin();
         }
@@ -235,7 +243,7 @@ public class FXMLDocumentController implements Initializable {
         String password = signup_password.getText();
 
         if (accountIdText.isEmpty() || !accountIdText.matches("\\d+")) {
-            showAlert("Error!", "Invalid Account ID!", "Account ID must be a number, please try again!");
+            showAlert("Error!", "Invalid Account ID!", "Account ID must be HUST ID, please try again!");
             return;
         }
 
@@ -277,7 +285,7 @@ public class FXMLDocumentController implements Initializable {
             signIn_form.setVisible(true);
             signup_form.setVisible(false);
             showAlert("Successfully!", "Registration Successful!",
-                    "Account " + account.GetAccountId() + " is registered!");
+                    "Account " + account.GetAccountId() + " has been registered!");
             clearSignUpField();
         } catch (DuplicateEntryException e) {
             showAlert("Error!", "Cannot Register!", e.getMessage());

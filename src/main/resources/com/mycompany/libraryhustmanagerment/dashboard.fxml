@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDashBoardConstroller">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="1100.0" styleClass="custom-style" stylesheets="@designDashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDashBoardConstroller">
    <children>
       <BorderPane layoutX="255.0" layoutY="100.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -55,7 +55,7 @@
                   </Label>
                   <Label fx:id="login_accountId" alignment="CENTER" layoutX="3.0" layoutY="143.0" prefHeight="18.0" prefWidth="190.0" text="Account ID" textFill="WHITE">
                      <font>
-                        <Font name="Microsoft Sans Serif" size="20.0" />
+                        <Font name="Microsoft Sans Serif" size="18.0" />
                      </font>
                   </Label>
                   <Button fx:id="managerBook_btn" layoutX="6.0" layoutY="225.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="62.0" prefWidth="181.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Books Managerment">
@@ -86,6 +86,11 @@
                   <Label fx:id="login_role_of_user" alignment="CENTER" layoutX="6.0" layoutY="173.0" prefHeight="18.0" prefWidth="190.0" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="login_role" alignment="CENTER" layoutX="2.0" layoutY="171.0" prefHeight="18.0" prefWidth="190.0" text="Role" textFill="WHITE">
+                     <font>
+                        <Font name="Microsoft Sans Serif" size="18.0" />
                      </font>
                   </Label>
                </children>
