@@ -281,7 +281,7 @@ public class FXMLDocumentController implements Initializable {
         Account account = new Account(accountId, name, emailAddress, phone, password, "Student");
 
         try {
-            AccountEntity.insert(account);
+            AccountEntity.InsertAccount(account);
             signIn_form.setVisible(true);
             signup_form.setVisible(false);
             showAlert("Successfully!", "Registration Successful!",

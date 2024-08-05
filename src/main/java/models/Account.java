@@ -25,6 +25,14 @@ public class Account {
         this.role = role;
     }
 
+    public Account(Integer accountId, String name, String emailAddress, String phoneNumber, String password) {
+        this.accountId = accountId;
+        this.name = name;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
     public Account() {
     }
 

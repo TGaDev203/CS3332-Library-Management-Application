@@ -15,9 +15,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mycompany.entities.AccountEntity;
 import com.mycompany.entities.BookEntity;
 import com.mycompany.entities.CatalogEntity;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,13 +73,22 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button account_Update;
 
     @FXML
-    private TextField account_accountID;
-
-    @FXML
     private TableColumn<Account, String> account_accountIDTable;
 
     @FXML
-    private TextField account_age;
+    private TextField account_accountID;
+
+    @FXML
+    private TextField account_name;
+
+    @FXML
+    private TextField account_emailAddress;
+
+    @FXML
+    private TextField account_phoneNumber;
+
+    @FXML
+    private TextField account_password;
 
     @FXML
     private TableColumn<Account, Integer> account_ageTable;
@@ -86,9 +98,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private TableColumn<Account, String> account_emailTable;
-
-    @FXML
-    private TextField account_name;
 
     @FXML
     private TableColumn<Account, String> account_passwordTableTable;
@@ -274,7 +283,22 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button signout_btn;
 
     @FXML
-    private TableView<Account> account_TableView;
+    private TableView<Account> account_accountTableView;
+
+    @FXML
+    private TableColumn<Account, Integer> account_accountIdColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_nameColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_emailAddressColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_phoneNumberColumn;
+
+    @FXML
+    private TableColumn<Account, String> account_passwordColumn;
 
     @FXML
     private AnchorPane account_form;
@@ -386,6 +410,16 @@ public class FXMLDashBoardConstroller implements Initializable {
         SetValueForBookTitlesCatalog();
         SetValueForBookGenreCatalog();
         SetValueForBookAuthorCatalog();
+        account_accountIdColumn.setCellValueFactory(
+                cellData -> new SimpleIntegerProperty(cellData.getValue().GetAccountId()).asObject());
+        account_nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetName()));
+        account_emailAddressColumn
+                .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetEmailAddress()));
+        account_phoneNumberColumn
+                .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetPhoneNumber()));
+        account_passwordColumn
+                .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().GetPassword()));
+        showAllAccountsInTable();
     }
 
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
@@ -664,5 +698,126 @@ public class FXMLDashBoardConstroller implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    @FXML
+    private void showAllAccountsInTable() {
+        List<Account> accounts = AccountEntity.ShowAllAccounts();
+        account_accountTableView.getItems().setAll(accounts);
+    }
+
+    @FXML
+    private void selectAccount() {
+        Account selectedAccount = account_accountTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedAccount != null) {
+            account_accountID.setText(selectedAccount.GetAccountId().toString());
+            account_name.setText(selectedAccount.GetName());
+            account_emailAddress.setText(selectedAccount.GetEmailAddress());
+            account_phoneNumber.setText(selectedAccount.GetPhoneNumber());
+            account_password.setText(selectedAccount.GetPassword());
+        } else {
+            showAlert("Selection Error", "No Account Selected", "Please select an account from the list.");
+        }
+    }
+
+    @FXML
+    private void handleUpdateAccount() {
+        if (!validateAccountFields()) {
+            showAlert("Error", "Invalid Input", "Please ensure all fields are filled in correctly.");
+            return;
+        }
+
+        Account account = new Account(
+                Integer.parseInt(account_accountID.getText()),
+                account_name.getText(),
+                account_emailAddress.getText(),
+                account_phoneNumber.getText(),
+                account_password.getText());
+
+        try {
+            AccountEntity.UpdateAccount(account);
+            showAlert("Success!", "Account Updated", "The account has been successfully updated.");
+            refreshAccountTableView();
+        } catch (SQLException e) {
+            showAlert("Error", "Update Failed", "An error occurred while updating the account.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleDeleteAccount() {
+        int accountId = Integer.parseInt(account_accountID.getText());
+
+        try {
+            if (showConfirmationAlert("Delete Account", "Confirm Delete",
+                    "Are you sure you want to delete this account?")) {
+                AccountEntity.DeleteAccount(accountId);
+                showAlert("Success!", "Account Deleted", "The account has been successfully deleted.");
+                refreshAccountTableView();
+            }
+        } catch (SQLException e) {
+            showAlert("Error", "Delete Failed", "An error occurred while deleting the account.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void refreshAccountTableView() {
+        try {
+            ObservableList<Account> accounts = AccountEntity.GetAllAccounts();
+            account_accountTableView.setItems(accounts);
+        } catch (SQLException e) {
+            showAlert("Error", "Refresh Failed", "An error occurred while refreshing the account list.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleSearchByAccountId() {
+        String idText = account_searchByUserID.getText();
+
+        if (idText.isEmpty()) {
+            showAlert("Error", "Input Required", "Please enter an account ID.");
+            return;
+        }
+
+        try {
+            int accountId = Integer.parseInt(idText);
+
+            Account account = AccountEntity.GetDataAccountById(accountId);
+
+            if (account != null) {
+                account_accountID.setText(String.valueOf(account.GetAccountId()));
+                account_name.setText(account.GetName());
+                account_emailAddress.setText(account.GetEmailAddress());
+                account_phoneNumber.setText(account.GetPhoneNumber());
+                account_password.setText(account.GetPassword());
+
+                showAlert("Found", "Account Found", "Account " + account.GetAccountId() + " has been found!");
+            } else {
+                showAlert("Not Found", "Account Not Found", "No account found with the provided ID.");
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Invalid ID", "Please enter a valid numeric account ID.");
+            e.printStackTrace();
+        }
+    }
+
+    private boolean validateAccountFields() {
+        return !account_accountID.getText().isEmpty() &&
+                !account_name.getText().isEmpty() &&
+                !account_emailAddress.getText().isEmpty() &&
+                !account_phoneNumber.getText().isEmpty() &&
+                !account_password.getText().isEmpty();
+    }
+
+    @FXML
+    private void clearFields() {
+        account_accountID.clear();
+        account_name.clear();
+        account_emailAddress.clear();
+        account_phoneNumber.clear();
+        account_password.clear();
     }
 }
