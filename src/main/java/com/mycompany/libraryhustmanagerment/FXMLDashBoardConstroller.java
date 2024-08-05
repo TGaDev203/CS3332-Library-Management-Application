@@ -743,6 +743,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             showAlert("Error", "Update Failed", "An error occurred while updating the account.");
             e.printStackTrace();
         }
+        clearFields();
     }
 
     @FXML
