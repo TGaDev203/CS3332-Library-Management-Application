@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="1100.0" styleClass="custom-style" stylesheets="@designDashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDashBoardConstroller">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="1100.0" styleClass="custom-style" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDashBoardConstroller">
    <children>
       <BorderPane layoutX="255.0" layoutY="100.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -47,48 +47,48 @@
          <left>
             <AnchorPane prefHeight="565.0" prefWidth="184.0" styleClass="nav-form" stylesheets="@designDashboard.css" BorderPane.alignment="CENTER">
                <children>
-                  <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="70.0" layoutY="97.0" size="7em" />
-                  <Label layoutX="63.0" layoutY="109.0" text="Welcome" textFill="WHITE">
+                  <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="63.0" layoutY="75.0" size="7em" />
+                  <Label layoutX="56.0" layoutY="91.0" text="Welcome" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login_accountId" alignment="CENTER" layoutX="3.0" layoutY="143.0" prefHeight="18.0" prefWidth="190.0" text="Account ID" textFill="WHITE">
+                  <Label fx:id="login_accountId" alignment="CENTER" layoutX="-4.0" layoutY="152.0" prefHeight="18.0" prefWidth="190.0" text="Account ID" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="managerBook_btn" layoutX="6.0" layoutY="225.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="62.0" prefWidth="181.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Books Managerment">
+                  <Button fx:id="managerBook_btn" layoutX="6.0" layoutY="269.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="62.0" prefWidth="181.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Books Management">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SERVER" />
                      </graphic>
                   </Button>
-                  <Button fx:id="borrowedBooks_btn" alignment="CENTER" layoutX="7.0" layoutY="296.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="60.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Borrowed Books">
+                  <Button fx:id="borrowedBooks_btn" alignment="CENTER" layoutX="5.0" layoutY="320.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="60.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Borrowed Books">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="EDIT" />
                      </graphic>
                   </Button>
-                  <Button fx:id="accountBtn" layoutX="5.0" layoutY="370.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="51.0" prefWidth="182.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Account Managerment">
+                  <Button fx:id="accountBtn" layoutX="4.0" layoutY="378.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="51.0" prefWidth="182.0" styleClass="nav-btn" stylesheets="@designDashboard.css" text="Account Management">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="USERS" />
                      </graphic>
                   </Button>
-                  <Button fx:id="signout_btn" layoutX="19.0" layoutY="466.0" mnemonicParsing="false" onAction="#signOut" styleClass="signout" stylesheets="@designDashboard.css">
+                  <Button fx:id="signout_btn" layoutX="34.0" layoutY="501.0" mnemonicParsing="false" onAction="#signOut" styleClass="signout" stylesheets="@designDashboard.css">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.8em" wrappingWidth="16.857162475585938" />
                      </graphic>
                   </Button>
-                  <Label layoutX="71.0" layoutY="473.0" text="Sign Out" textFill="WHITE">
+                  <Label layoutX="84.0" layoutY="507.0" text="Sign Out" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login_role_of_user" alignment="CENTER" layoutX="6.0" layoutY="173.0" prefHeight="18.0" prefWidth="190.0" textFill="WHITE">
+                  <Label fx:id="login_role" alignment="CENTER" layoutX="-6.0" layoutY="182.0" prefHeight="18.0" prefWidth="190.0" text="Role" textFill="WHITE">
                      <font>
-                        <Font name="Microsoft Sans Serif" size="12.0" />
+                        <Font name="Microsoft Sans Serif" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login_role" alignment="CENTER" layoutX="2.0" layoutY="171.0" prefHeight="18.0" prefWidth="190.0" text="Role" textFill="WHITE">
+                  <Label fx:id="login_name" alignment="CENTER" layoutX="-5.0" layoutY="125.0" prefHeight="18.0" prefWidth="190.0" text="Name" textFill="WHITE">
                      <font>
                         <Font name="Microsoft Sans Serif" size="18.0" />
                      </font>
@@ -151,7 +151,7 @@
                                 <columns>
                                     <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
                                   <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
-                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Gerne" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Genre" />
                                     <TableColumn fx:id="managerBook_authorTable" prefWidth="111.0" text="Authors" />
                                     <TableColumn fx:id="managerBook_publisherTable" prefWidth="72.0" text="Publisher" />
                                     <TableColumn fx:id="managerBook_publicationDate" prefWidth="99.0" text="Publication Date" />

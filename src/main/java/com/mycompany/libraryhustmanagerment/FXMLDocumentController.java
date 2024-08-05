@@ -155,7 +155,7 @@ public class FXMLDocumentController implements Initializable {
 
         FXMLDashBoardConstroller dashboardController = loader.getController();
 
-        dashboardController.SetAccountIdAndRole(userLogin);
+        dashboardController.DisplayAccountIdRoleAndName(userLogin);
 
         Stage stage = new Stage();
         Scene scene = new Scene(root);

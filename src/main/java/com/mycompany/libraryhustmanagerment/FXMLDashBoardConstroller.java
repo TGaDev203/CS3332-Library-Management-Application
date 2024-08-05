@@ -36,6 +36,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -162,6 +164,9 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private Label login_accountId;
+
+    @FXML
+    private Label login_name;
 
     // @FXML
     // private AnchorPane main_form;
@@ -337,7 +342,7 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     private Account account;
 
-    public void SetAccountIdAndRole(Account account) {
+    public void DisplayAccountIdRoleAndName(Account account) {
         this.account = account;
         UpdateUI();
     }
@@ -346,7 +351,33 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (account != null) {
             login_accountId.setText(account.GetAccountId().toString());
             login_role.setText(account.GetRole());
+            login_name.setText(account.GetName());
+            if (account != null && "Student".equals(account.GetRole())) {
+                DisableButtonsForStudentRole();
+            }
         }
+    }
+
+    private void DisableButtonsForStudentRole() {
+        DisableButtonWithLockIcon(managerBook_addBtn);
+        DisableButtonWithLockIcon(managerBook_updateBtn);
+        DisableButtonWithLockIcon(managerBook_resetBtn);
+        DisableButtonWithLockIcon(managerBook_deleteBtn);
+        DisableButtonWithLockIcon(managerBook_selectBookBtn);
+        DisableButtonWithLockIcon(managerBook_borrowBookBtn);
+        DisableButtonWithLockIcon(borrowedBook_selectBook);
+        DisableButtonWithLockIcon(borrowedBook_returnBook);
+        DisableButtonWithLockIcon(accountBtn);
+    }
+
+    private void DisableButtonWithLockIcon(Button button) {
+        button.setDisable(true);
+        button.setOpacity(0.8);
+        ImageView lockIcon = new ImageView(
+                new Image(getClass().getResourceAsStream("/com/mycompany/libraryhustmanagerment/Images/Lock.png")));
+        lockIcon.setFitHeight(16);
+        lockIcon.setFitWidth(16);
+        button.setGraphic(lockIcon);
     }
 
     @Override
