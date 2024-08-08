@@ -84,19 +84,10 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button accountBtn;
 
     @FXML
-    private TableColumn<Account, String> account_nameTable;
-
-    @FXML
     private Button account_ResetBtn;
 
     @FXML
-    private Button account_Search;
-
-    @FXML
     private Button account_Update;
-
-    @FXML
-    private TableColumn<Account, String> account_accountIDTable;
 
     @FXML
     private TextField account_accountID;
@@ -115,15 +106,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private Button account_deleteBtn;
-
-    @FXML
-    private TableColumn<Account, String> account_emailTable;
-
-    @FXML
-    private TableColumn<Account, String> account_passwordTableTable;
-
-    @FXML
-    private TableColumn<Account, String> account_phoneNumberTable;
 
     @FXML
     private TextField account_searchByUserID;
@@ -305,6 +287,8 @@ public class FXMLDashBoardConstroller implements Initializable {
     @FXML
     private Button signout_btn;
 
+    private Account account;
+
     @FXML
     private void dasboard_form_close() {
         System.exit(0);
@@ -356,56 +340,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         alert.showAndWait();
     }
 
-    private boolean showConfirmationAlert(String title, String header, String content) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
-
-    private Account account;
-
-    public void DisplayAccountIdRoleAndName(Account account) {
-        this.account = account;
-        UpdateUI();
-    }
-
-    private void UpdateUI() {
-        if (account != null) {
-            login_accountId.setText(account.GetAccountId().toString());
-            login_role.setText(account.GetRole());
-            login_name.setText(account.GetName());
-            if (account != null && "Student".equals(account.GetRole())) {
-                DisableButtonsForStudentRole();
-            }
-        }
-    }
-
-    private void DisableButtonsForStudentRole() {
-        DisableButtonWithLockIcon(managerBook_addBtn);
-        DisableButtonWithLockIcon(managerBook_updateBtn);
-        DisableButtonWithLockIcon(managerBook_resetBtn);
-        DisableButtonWithLockIcon(managerBook_deleteBtn);
-        DisableButtonWithLockIcon(managerBook_selectBookBtn);
-        DisableButtonWithLockIcon(managerBook_borrowBookBtn);
-        DisableButtonWithLockIcon(borrowedBook_selectBook);
-        DisableButtonWithLockIcon(borrowedBook_returnBook);
-        DisableButtonWithLockIcon(accountBtn);
-    }
-
-    private void DisableButtonWithLockIcon(Button button) {
-        button.setDisable(true);
-        button.setOpacity(0.8);
-        ImageView lockIcon = new ImageView(
-                new Image(getClass().getResourceAsStream("/com/mycompany/libraryhustmanagerment/Images/Lock.png")));
-        lockIcon.setFitHeight(16);
-        lockIcon.setFitWidth(16);
-        button.setGraphic(lockIcon);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -426,6 +360,12 @@ public class FXMLDashBoardConstroller implements Initializable {
         ShowAllAccountsInTable();
     }
 
+    /*
+     *
+     * //! Book Function
+     *
+     */
+
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
             if (!textField.getText().equals("")) {
@@ -440,7 +380,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
 
-    // ! Function AddBook
     @FXML
     private void AddBook() {
         String bookTitle = null;
@@ -682,6 +621,60 @@ public class FXMLDashBoardConstroller implements Initializable {
                 Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    /*
+     *
+     * //! Account Function
+     *
+     */
+
+    private boolean showConfirmationAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    public void DisplayAccountIdRoleAndName(Account account) {
+        this.account = account;
+        UpdateUI();
+    }
+
+    private void UpdateUI() {
+        if (account != null) {
+            login_accountId.setText(account.GetAccountId().toString());
+            login_role.setText(account.GetRole());
+            login_name.setText(account.GetName());
+            if (account != null && "Student".equals(account.GetRole())) {
+                DisableButtonsForStudentRole();
+            }
+        }
+    }
+
+    private void DisableButtonsForStudentRole() {
+        DisableButtonWithLockIcon(managerBook_addBtn);
+        DisableButtonWithLockIcon(managerBook_updateBtn);
+        DisableButtonWithLockIcon(managerBook_resetBtn);
+        DisableButtonWithLockIcon(managerBook_deleteBtn);
+        DisableButtonWithLockIcon(managerBook_selectBookBtn);
+        DisableButtonWithLockIcon(managerBook_borrowBookBtn);
+        DisableButtonWithLockIcon(borrowedBook_selectBook);
+        DisableButtonWithLockIcon(borrowedBook_returnBook);
+        DisableButtonWithLockIcon(accountBtn);
+    }
+
+    private void DisableButtonWithLockIcon(Button button) {
+        button.setDisable(true);
+        button.setOpacity(0.8);
+        ImageView lockIcon = new ImageView(
+                new Image(getClass().getResourceAsStream("/com/mycompany/libraryhustmanagerment/Images/Lock.png")));
+        lockIcon.setFitHeight(16);
+        lockIcon.setFitWidth(16);
+        button.setGraphic(lockIcon);
     }
 
     @FXML
