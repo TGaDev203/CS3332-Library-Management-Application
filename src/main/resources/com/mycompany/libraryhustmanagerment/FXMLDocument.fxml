@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libraryhustmanagerment.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="signIn_form" layoutY="-32.8" prefHeight="535.0" prefWidth="197.0" stylesheets="@LoginDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="signIn_form" layoutY="-32.8" prefHeight="535.0" prefWidth="197.0" stylesheets="@LoginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="signin_close" layoutX="720.0" mnemonicParsing="false" onAction="#signIn_close" prefHeight="26.0" prefWidth="61.0" styleClass="close" stylesheets="@LoginDesign.css">
                <graphic>
@@ -37,14 +37,14 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Hyperlink fx:id="signin_hyperlink" layoutX="303.0" layoutY="471.0" onAction="#switchForm" stylesheets="@LoginDesign.css" text="Create an new account?" />
+            <Hyperlink fx:id="signin_hyperlink" layoutX="303.0" layoutY="471.0" onAction="#switchForm" stylesheets="@LoginDesign.css" text="Create an new account?" visible="false" />
          </children>
          <styleClass>
             <String fx:value="bg-form" />
             <String fx:value="custom-style" />
          </styleClass>
       </AnchorPane>
-      <AnchorPane fx:id="signup_form" prefHeight="453.0" prefWidth="688.0" stylesheets="@LoginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="signup_form" prefHeight="453.0" prefWidth="688.0" stylesheets="@LoginDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="signup_accountId" alignment="BOTTOM_CENTER" layoutX="268.0" layoutY="187.0" prefHeight="30.0" prefWidth="270.0" promptText="Account ID" styleClass="textFill" stylesheets="@LoginDesign.css" />
             <Button fx:id="signup_close" layoutX="720.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_close" prefHeight="26.0" prefWidth="61.0" styleClass="close" stylesheets="@LoginDesign.css">
@@ -52,7 +52,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" />
                </graphic>
             </Button>
-            <Button fx:id="signup_minimize" layoutX="658.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
+            <Button fx:id="signup_minimize" layoutX="655.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                </graphic>

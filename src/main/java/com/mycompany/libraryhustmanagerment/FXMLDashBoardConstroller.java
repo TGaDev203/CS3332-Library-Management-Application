@@ -84,19 +84,16 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button accountBtn;
 
     @FXML
-    private TableColumn<Account, String> account_nameTable;
+    private Button account_addBtn;
+
+    @FXML
+    private Button account_deleteBtn;
+
+    @FXML
+    private Button account_updateButton;
 
     @FXML
     private Button account_ResetBtn;
-
-    @FXML
-    private Button account_Search;
-
-    @FXML
-    private Button account_Update;
-
-    @FXML
-    private TableColumn<Account, String> account_accountIDTable;
 
     @FXML
     private TextField account_accountID;
@@ -112,18 +109,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private TextField account_password;
-
-    @FXML
-    private Button account_deleteBtn;
-
-    @FXML
-    private TableColumn<Account, String> account_emailTable;
-
-    @FXML
-    private TableColumn<Account, String> account_passwordTableTable;
-
-    @FXML
-    private TableColumn<Account, String> account_phoneNumberTable;
 
     @FXML
     private TextField account_searchByUserID;
@@ -356,56 +341,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         alert.showAndWait();
     }
 
-    private boolean showConfirmationAlert(String title, String header, String content) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
-
-    private Account account;
-
-    public void DisplayAccountIdRoleAndName(Account account) {
-        this.account = account;
-        UpdateUI();
-    }
-
-    private void UpdateUI() {
-        if (account != null) {
-            login_accountId.setText(account.GetAccountId().toString());
-            login_role.setText(account.GetRole());
-            login_name.setText(account.GetName());
-            if (account != null && "Student".equals(account.GetRole())) {
-                DisableButtonsForStudentRole();
-            }
-        }
-    }
-
-    private void DisableButtonsForStudentRole() {
-        DisableButtonWithLockIcon(managerBook_addBtn);
-        DisableButtonWithLockIcon(managerBook_updateBtn);
-        DisableButtonWithLockIcon(managerBook_resetBtn);
-        DisableButtonWithLockIcon(managerBook_deleteBtn);
-        DisableButtonWithLockIcon(managerBook_selectBookBtn);
-        DisableButtonWithLockIcon(managerBook_borrowBookBtn);
-        DisableButtonWithLockIcon(borrowedBook_selectBook);
-        DisableButtonWithLockIcon(borrowedBook_returnBook);
-        DisableButtonWithLockIcon(accountBtn);
-    }
-
-    private void DisableButtonWithLockIcon(Button button) {
-        button.setDisable(true);
-        button.setOpacity(0.8);
-        ImageView lockIcon = new ImageView(
-                new Image(getClass().getResourceAsStream("/com/mycompany/libraryhustmanagerment/Images/Lock.png")));
-        lockIcon.setFitHeight(16);
-        lockIcon.setFitWidth(16);
-        button.setGraphic(lockIcon);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -426,6 +361,12 @@ public class FXMLDashBoardConstroller implements Initializable {
         ShowAllAccountsInTable();
     }
 
+    /*
+     *
+     * //! Book Function
+     *
+     */
+
     private Boolean checkStringNotNULL(String nameOfObject, TextField textField) {
         try {
             if (!textField.getText().equals("")) {
@@ -440,7 +381,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
     }
 
-    // ! Function AddBook
     @FXML
     private void AddBook() {
         String bookTitle = null;
@@ -473,10 +413,41 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (checkStringNotNULL("Publisher", managerBook_publisherField)) {
             publisher = managerBook_publisherField.getText();
         }
+        // Date public
         LocalDate selectedDate = managerBook_date.getValue();
-        Date publicationDate = Date.valueOf(selectedDate);
+        Date publicationDate = null;
+        if (selectedDate != null) {
+            // Chuyển đổi LocalDate sang java.sql.Date
+            publicationDate = Date.valueOf(selectedDate);
+
+            // Tiếp tục xử lý với publicationDate
+            // ...
+        } else {
+            // Hiển thị thông báo lỗi nếu selectedDate là null
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose a publication date.");
+            alert.showAndWait();
+        }
 
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        if (BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
+        if (BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
         BookEntity.AddBook(newBook);
         showAlert("Success!", "Book is added successfully!", "Book added is: " + newBook.getBookTitle());
         managerBook_bookTitle.clear();
@@ -490,10 +461,15 @@ public class FXMLDashBoardConstroller implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     // Set value for comboBox
     private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().clear();
         comboBox.getItems().addAll("None");
         for (int i = 0; i < catalogList.size(); i++) {
             comboBox.getItems().addAll(catalogList.get(i));
@@ -668,6 +644,10 @@ public class FXMLDashBoardConstroller implements Initializable {
         } else {
             System.out.println("Selected book is null");
         }
+        // Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     @FXML
@@ -682,6 +662,62 @@ public class FXMLDashBoardConstroller implements Initializable {
                 Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    /*
+     *
+     * //! Account Function
+     *
+     */
+
+    private Account account;
+
+    private boolean showConfirmationAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    public void DisplayAccountIdRoleAndName(Account account) {
+        this.account = account;
+        UpdateUI();
+    }
+
+    private void UpdateUI() {
+        if (account != null) {
+            login_accountId.setText(account.GetAccountId().toString());
+            login_role.setText(account.GetRole());
+            login_name.setText(account.GetName());
+            if (account != null && "Student".equals(account.GetRole())) {
+                DisableButtonsForStudentRole();
+            }
+        }
+    }
+
+    private void DisableButtonsForStudentRole() {
+        DisableButtonWithLockIcon(managerBook_addBtn);
+        DisableButtonWithLockIcon(managerBook_updateBtn);
+        DisableButtonWithLockIcon(managerBook_resetBtn);
+        DisableButtonWithLockIcon(managerBook_deleteBtn);
+        DisableButtonWithLockIcon(managerBook_selectBookBtn);
+        DisableButtonWithLockIcon(managerBook_borrowBookBtn);
+        DisableButtonWithLockIcon(borrowedBook_selectBook);
+        DisableButtonWithLockIcon(borrowedBook_returnBook);
+        DisableButtonWithLockIcon(accountBtn);
+    }
+
+    private void DisableButtonWithLockIcon(Button button) {
+        button.setDisable(true);
+        button.setOpacity(0.8);
+        ImageView lockIcon = new ImageView(
+                new Image(getClass().getResourceAsStream("/com/mycompany/libraryhustmanagerment/Images/Lock.png")));
+        lockIcon.setFitHeight(16);
+        lockIcon.setFitWidth(16);
+        button.setGraphic(lockIcon);
     }
 
     @FXML
@@ -723,6 +759,63 @@ public class FXMLDashBoardConstroller implements Initializable {
             LockTextFieldWithTooltip(account_accountID);
         } else {
             showAlert("Selection Error", "No Account Selected", "Please select an account from the list.");
+        }
+    }
+
+    @FXML
+    private void HandleAddAccount() {
+        String accountIdText = account_accountID.getText();
+        String name = account_name.getText();
+        String emailAddress = account_emailAddress.getText();
+        String phoneNumber = account_phoneNumber.getText();
+        String password = account_password.getText();
+
+        if (accountIdText.isEmpty() || !accountIdText.matches("\\d+")) {
+            showAlert("Error!", "Invalid Account ID!", "Account ID must be HUST ID, please try again!");
+            return;
+        }
+
+        Integer accountId = Integer.valueOf(accountIdText);
+
+        if (!Account.validateAccountId(accountIdText)) {
+            showAlert("Error!", "Invalid Account ID!",
+                    "Account ID must be an 8-digit number starting from 2016 to 2024, please try again!");
+            return;
+        }
+
+        if (!Account.validatePhoneNumber(phoneNumber)) {
+            showAlert("Error!", "Invalid Phone Number!",
+                    "Phone number must be 10 digits long, starting with 0 and followed by 9 digits (e.g., 0912345678), please try again!");
+            return;
+        }
+
+        if (!Account.validateEmailAddress(emailAddress)) {
+            showAlert("Error!", "Invalid Email Address!",
+                    "Invalid email address. Please ensure the email address ends with @sis.hust.edu.vn or @hust.edu.vn.");
+            return;
+        }
+
+        if (AccountEntity.GetDataAccountById(accountId) != null) {
+            showAlert("Error!", "Cannot Add!", "Account ID already exists, please choose another one!");
+            return;
+        }
+
+        if (!Account.validatePasswordHash(password)) {
+            showAlert("Error!", "Weak Password!",
+                    "Password must contain digits, lowercase, uppercase, special symbols (@#$%), and be 6 to 15 characters long. Please try again!");
+            return;
+        }
+
+        Account account = new Account(accountId, name, emailAddress, phoneNumber, password, "Student");
+
+        try {
+            AccountEntity.InsertAccount(account);
+            ;
+            showAlert("Successfully!", "Registration Successful!",
+                    "Account " + account.GetAccountId() + " has been added!");
+            ClearFields();
+        } catch (DuplicateEntryException e) {
+            showAlert("Error!", "Cannot Register!", e.getMessage());
         }
     }
 
@@ -798,16 +891,36 @@ public class FXMLDashBoardConstroller implements Initializable {
         try {
             int accountId = Integer.parseInt(idText);
 
-            Account account = AccountEntity.GetDataAccountById(accountId);
+            TableView<Account> tableView = account_accountTableView;
+            ObservableList<Account> items = tableView.getItems();
 
-            if (account != null) {
-                account_accountID.setText(String.valueOf(account.GetAccountId()));
-                account_name.setText(account.GetName());
-                account_emailAddress.setText(account.GetEmailAddress());
-                account_phoneNumber.setText(account.GetPhoneNumber());
-                account_password.setText(account.GetPassword());
+            boolean found = false;
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).GetAccountId() == accountId) {
+                    tableView.getSelectionModel().select(i);
+                    tableView.scrollTo(i);
 
-                showAlert("Found", "Account Found", "Account " + account.GetAccountId() + " has been found!");
+                    tableView.getFocusModel().focus(i);
+                    tableView.requestFocus();
+
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                Account account = AccountEntity.GetDataAccountById(accountId);
+                if (account != null) {
+                    account_accountID.setText(String.valueOf(account.GetAccountId()));
+                    account_name.setText(account.GetName());
+                    account_emailAddress.setText(account.GetEmailAddress());
+                    account_phoneNumber.setText(account.GetPhoneNumber());
+                    account_password.setText(account.GetPassword());
+
+                    showAlert("Found", "Account Found", "Account " + account.GetAccountId() + " has been found!");
+                } else {
+                    showAlert("Not Found", "Account Not Found", "No account found with the provided ID.");
+                }
             } else {
                 showAlert("Not Found", "Account Not Found", "No account found with the provided ID.");
             }
@@ -815,6 +928,8 @@ public class FXMLDashBoardConstroller implements Initializable {
             showAlert("Error", "Invalid ID", "Please enter a valid numeric account ID.");
             e.printStackTrace();
         }
+
+        LockTextFieldWithTooltip(account_accountID);
     }
 
     private boolean ValidateAccountFields() {
@@ -834,6 +949,28 @@ public class FXMLDashBoardConstroller implements Initializable {
         return isValidAccountId && isValidPhoneNumber && isValidEmailAddress && isValidPassword;
     }
 
+    private boolean isTextFieldLocked = false;
+
+    private void LockTextFieldWithTooltip(TextField textField) {
+        isTextFieldLocked = true;
+
+        textField.setEditable(false);
+
+        Tooltip tooltip = new Tooltip("Cannot edit Account ID for security reasons.");
+
+        tooltip.setStyle(
+                "-fx-font-size: 14px; -fx-text-fill: #fff; -fx-background-color: #000; -fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;");
+
+        textField.setOnMouseEntered(event -> {
+            if (isTextFieldLocked) {
+                Bounds boundsInScreen = textField.localToScreen(textField.getBoundsInLocal());
+                tooltip.show(textField, boundsInScreen.getMinX(), boundsInScreen.getMinY() - 50);
+            }
+        });
+
+        textField.setOnMouseExited(event -> tooltip.hide());
+    }
+
     @FXML
     private void ClearFields() {
         account_accountID.clear();
@@ -841,23 +978,11 @@ public class FXMLDashBoardConstroller implements Initializable {
         account_emailAddress.clear();
         account_phoneNumber.clear();
         account_password.clear();
+        if (isTextFieldLocked) {
+            account_accountID.setEditable(true);
+            account_accountID.setOnMouseEntered(null);
+            account_accountID.setOnMouseExited(null);
+            isTextFieldLocked = false;
+        }
     }
-
-    private void LockTextFieldWithTooltip(TextField textField) {
-        textField.setEditable(false);
-
-        Tooltip tooltip = new Tooltip("Cannot edit Account ID for security reasons.");
-
-        // Tạo CSS cho tooltip
-        tooltip.setStyle(
-                "-fx-font-size: 14px; -fx-text-fill: #fff; -fx-background-color: #000; -fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;");
-
-        textField.setOnMouseEntered(event -> {
-            Bounds boundsInScreen = textField.localToScreen(textField.getBoundsInLocal());
-            tooltip.show(textField, boundsInScreen.getMinX(), boundsInScreen.getMinY() - 50);
-        });
-
-        textField.setOnMouseExited(event -> tooltip.hide());
-    }
-
 }
