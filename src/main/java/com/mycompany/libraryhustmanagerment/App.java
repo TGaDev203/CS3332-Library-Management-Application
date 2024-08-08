@@ -18,8 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        Parent root = loadFXML("FXMLDocumen"); // Default: 640, 480
-        Parent root = loadFXML("dashboard"); // Default: 640, 480
+//        Parent root = loadFXML("FXMLDocumen");
+        Parent root = loadFXML("dashboard");
         scene = new Scene(root);
 
         stage.initStyle(StageStyle.TRANSPARENT);

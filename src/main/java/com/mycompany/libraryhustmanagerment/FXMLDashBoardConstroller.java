@@ -859,16 +859,36 @@ public class FXMLDashBoardConstroller implements Initializable {
         try {
             int accountId = Integer.parseInt(idText);
 
-            Account account = AccountEntity.GetDataAccountById(accountId);
+            TableView<Account> tableView = account_accountTableView;
+            ObservableList<Account> items = tableView.getItems();
 
-            if (account != null) {
-                account_accountID.setText(String.valueOf(account.GetAccountId()));
-                account_name.setText(account.GetName());
-                account_emailAddress.setText(account.GetEmailAddress());
-                account_phoneNumber.setText(account.GetPhoneNumber());
-                account_password.setText(account.GetPassword());
+            boolean found = false;
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).GetAccountId() == accountId) {
+                    tableView.getSelectionModel().select(i);
+                    tableView.scrollTo(i);
 
-                showAlert("Found", "Account Found", "Account " + account.GetAccountId() + " has been found!");
+                    tableView.getFocusModel().focus(i);
+                    tableView.requestFocus();
+
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                Account account = AccountEntity.GetDataAccountById(accountId);
+                if (account != null) {
+                    account_accountID.setText(String.valueOf(account.GetAccountId()));
+                    account_name.setText(account.GetName());
+                    account_emailAddress.setText(account.GetEmailAddress());
+                    account_phoneNumber.setText(account.GetPhoneNumber());
+                    account_password.setText(account.GetPassword());
+
+                    showAlert("Found", "Account Found", "Account " + account.GetAccountId() + " has been found!");
+                } else {
+                    showAlert("Not Found", "Account Not Found", "No account found with the provided ID.");
+                }
             } else {
                 showAlert("Not Found", "Account Not Found", "No account found with the provided ID.");
             }
@@ -876,6 +896,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             showAlert("Error", "Invalid ID", "Please enter a valid numeric account ID.");
             e.printStackTrace();
         }
+
         LockTextFieldWithTooltip(account_accountID);
     }
 

@@ -242,31 +242,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 
 .combo-box {
-    -fx-background-color: #FFFFFF; /* Màu nền của ComboBox */
-    -fx-text-fill: #333333; /* Màu chữ */
-    -fx-font-size: 12px; /* Kích thước chữ */
-    -fx-padding: 5px; /* Khoảng cách bên trong ComboBox */
-    -fx-border-color: #CCCCCC; /* Màu viền */
-    -fx-border-width: 1px; /* Độ dày viền */
-    -fx-border-radius: 5px; /* Bo góc viền */
-    -fx-background-radius: 5px; /* Bo góc nền */
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #333333;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .combo-box .combo-box-popup {
-    -fx-background-color: #FFFFFF; /* Màu nền của danh sách thả xuống */
-    -fx-border-color: #CCCCCC; /* Màu viền của danh sách thả xuống */
-    -fx-border-width: 1px; /* Độ dày viền của danh sách thả xuống */
-    -fx-border-radius: 5px; /* Bo góc viền của danh sách thả xuống */
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
 }
 
 .combo-box .combo-box-cell {
-    -fx-background-color: #FFFFFF; /* Màu nền của từng mục trong danh sách thả xuống */
-    -fx-text-fill: #333333; /* Màu chữ của từng mục */
-    -fx-padding: 5px; /* Khoảng cách bên trong từng mục */
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #333333;
+    -fx-padding: 5px;
 }
 
 .combo-box .combo-box-cell:hover {
-    -fx-background-color: #388E3C; /* Màu nền khi hover */
+    -fx-background-color: #388E3C;
 }
 
 .custom-style {
