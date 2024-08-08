@@ -115,7 +115,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 1.8px;
 }
 .add-btn {
-    -fx-background-color: #446093;
+    -fx-background-color: #41916f;
     -fx-background-radius: 8px; 
     -fx-cursor: hand;
     -fx-text-fill: #fff;
@@ -126,7 +126,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #5981c5;
 }
 .update-btn {
-    -fx-background-color: #41916f;
+    -fx-background-color: #446093;
     -fx-background-radius: 8px; 
     -fx-cursor: hand;
     -fx-text-fill: #fff;
