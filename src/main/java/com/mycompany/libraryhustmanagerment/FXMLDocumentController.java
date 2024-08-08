@@ -30,6 +30,9 @@ import models.Account;
 public class FXMLDocumentController implements Initializable {
 
     @FXML
+    private AnchorPane rootPane;
+
+    @FXML
     private AnchorPane signIn_form;
 
     @FXML
@@ -82,9 +85,6 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Label title;
-
-    @FXML
-    private AnchorPane rootPane;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -237,7 +237,7 @@ public class FXMLDocumentController implements Initializable {
 
     private void handleSignUp() {
         String name = signup_name.getText();
-        String phone = signup_phoneNumber.getText();
+        String phoneNumber = signup_phoneNumber.getText();
         String emailAddress = signup_emailAddress.getText();
         String accountIdText = signup_accountId.getText();
         String password = signup_password.getText();
@@ -255,7 +255,7 @@ public class FXMLDocumentController implements Initializable {
             return;
         }
 
-        if (!Account.validatePhoneNumber(phone)) {
+        if (!Account.validatePhoneNumber(phoneNumber)) {
             showAlert("Error!", "Invalid Phone Number!",
                     "Phone number must be 10 digits long, starting with 0 and followed by 9 digits (e.g., 0912345678), please try again!");
             return;
@@ -278,7 +278,7 @@ public class FXMLDocumentController implements Initializable {
             return;
         }
 
-        Account account = new Account(accountId, name, emailAddress, phone, password, "Student");
+        Account account = new Account(accountId, name, emailAddress, phoneNumber, password, "Student");
 
         try {
             AccountEntity.InsertAccount(account);

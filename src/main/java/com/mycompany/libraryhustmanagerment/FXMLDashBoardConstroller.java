@@ -84,10 +84,16 @@ public class FXMLDashBoardConstroller implements Initializable {
     private Button accountBtn;
 
     @FXML
-    private Button account_ResetBtn;
+    private Button account_addBtn;
 
     @FXML
-    private Button account_Update;
+    private Button account_deleteBtn;
+
+    @FXML
+    private Button account_updateButton;
+
+    @FXML
+    private Button account_ResetBtn;
 
     @FXML
     private TextField account_accountID;
@@ -103,9 +109,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private TextField account_password;
-
-    @FXML
-    private Button account_deleteBtn;
 
     @FXML
     private TextField account_searchByUserID;
@@ -286,8 +289,6 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @FXML
     private Button signout_btn;
-
-    private Account account;
 
     @FXML
     private void dasboard_form_close() {
@@ -629,6 +630,8 @@ public class FXMLDashBoardConstroller implements Initializable {
      *
      */
 
+    private Account account;
+
     private boolean showConfirmationAlert(String title, String header, String content) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -716,6 +719,63 @@ public class FXMLDashBoardConstroller implements Initializable {
             LockTextFieldWithTooltip(account_accountID);
         } else {
             showAlert("Selection Error", "No Account Selected", "Please select an account from the list.");
+        }
+    }
+
+    @FXML
+    private void HandleAddAccount() {
+        String accountIdText = account_accountID.getText();
+        String name = account_name.getText();
+        String emailAddress = account_emailAddress.getText();
+        String phoneNumber = account_phoneNumber.getText();
+        String password = account_password.getText();
+
+        if (accountIdText.isEmpty() || !accountIdText.matches("\\d+")) {
+            showAlert("Error!", "Invalid Account ID!", "Account ID must be HUST ID, please try again!");
+            return;
+        }
+
+        Integer accountId = Integer.valueOf(accountIdText);
+
+        if (!Account.validateAccountId(accountIdText)) {
+            showAlert("Error!", "Invalid Account ID!",
+                    "Account ID must be an 8-digit number starting from 2016 to 2024, please try again!");
+            return;
+        }
+
+        if (!Account.validatePhoneNumber(phoneNumber)) {
+            showAlert("Error!", "Invalid Phone Number!",
+                    "Phone number must be 10 digits long, starting with 0 and followed by 9 digits (e.g., 0912345678), please try again!");
+            return;
+        }
+
+        if (!Account.validateEmailAddress(emailAddress)) {
+            showAlert("Error!", "Invalid Email Address!",
+                    "Invalid email address. Please ensure the email address ends with @sis.hust.edu.vn or @hust.edu.vn.");
+            return;
+        }
+
+        if (AccountEntity.GetDataAccountById(accountId) != null) {
+            showAlert("Error!", "Cannot Add!", "Account ID already exists, please choose another one!");
+            return;
+        }
+
+        if (!Account.validatePasswordHash(password)) {
+            showAlert("Error!", "Weak Password!",
+                    "Password must contain digits, lowercase, uppercase, special symbols (@#$%), and be 6 to 15 characters long. Please try again!");
+            return;
+        }
+
+        Account account = new Account(accountId, name, emailAddress, phoneNumber, password, "Student");
+
+        try {
+            AccountEntity.InsertAccount(account);
+            ;
+            showAlert("Successfully!", "Registration Successful!",
+                    "Account " + account.GetAccountId() + " has been added!");
+            ClearFields();
+        } catch (DuplicateEntryException e) {
+            showAlert("Error!", "Cannot Register!", e.getMessage());
         }
     }
 
