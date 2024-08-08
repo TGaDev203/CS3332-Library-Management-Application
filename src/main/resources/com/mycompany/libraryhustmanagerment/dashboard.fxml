@@ -152,6 +152,7 @@
                                     <TableColumn fx:id="managerBook_bookID" minWidth="8.0" prefWidth="47.0" text="BookID" />
                                   <TableColumn fx:id="managerBook_bookTitleTable" prefWidth="119.0" text="Book Title" />
                                   <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Genre" />
+                                  <TableColumn fx:id="managerBook_genreTable" minWidth="8.0" prefWidth="74.0" text="Genre" />
                                     <TableColumn fx:id="managerBook_authorTable" prefWidth="111.0" text="Authors" />
                                     <TableColumn fx:id="managerBook_publisherTable" prefWidth="72.0" text="Publisher" />
                                     <TableColumn fx:id="managerBook_publicationDate" prefWidth="99.0" text="Publication Date" />

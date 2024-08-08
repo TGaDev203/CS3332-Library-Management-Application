@@ -9,7 +9,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List; // Ensure this import
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -301,20 +301,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         stage.setIconified(true);
     }
 
-    // private void getUserNameAndRole() {
-    // Account account = new Account();
-
-    // login_accountId.setText(account.GetAccountId().toString());
-
-    // String getUserRole = account.GetRole();
-
-    // if (getUserRole == null) {
-    // return;
-    // }
-
-    // login_role.setText("Your role: " + getUserRole);
-    // }
-
     @FXML
     private void switchForm(ActionEvent event) throws IOException {
         if (event.getSource() == managerBook_btn) {
@@ -343,7 +329,11 @@ public class FXMLDashBoardConstroller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        try {
+            SetValueMangagetBookAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
         SetValueForBookTitlesCatalog();
         SetValueForBookGenreCatalog();
         SetValueForBookAuthorCatalog();
@@ -413,17 +403,14 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (checkStringNotNULL("Publisher", managerBook_publisherField)) {
             publisher = managerBook_publisherField.getText();
         }
-        // Date public
+
         LocalDate selectedDate = managerBook_date.getValue();
         Date publicationDate = null;
         if (selectedDate != null) {
-            // Chuyển đổi LocalDate sang java.sql.Date
+
             publicationDate = Date.valueOf(selectedDate);
 
-            // Tiếp tục xử lý với publicationDate
-            // ...
         } else {
-            // Hiển thị thông báo lỗi nếu selectedDate là null
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -432,14 +419,6 @@ public class FXMLDashBoardConstroller implements Initializable {
         }
 
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
-        if (BookEntity.IsExisted(newBook)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Book is exitsted.");
-            alert.showAndWait();
-            return;
-        }
         if (BookEntity.IsExisted(newBook)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -465,10 +444,15 @@ public class FXMLDashBoardConstroller implements Initializable {
         SetValueForBookTitlesCatalog();
         SetValueForBookGenreCatalog();
         SetValueForBookAuthorCatalog();
+        // Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     // Set value for comboBox
     private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().clear();
         comboBox.getItems().clear();
         comboBox.getItems().addAll("None");
         for (int i = 0; i < catalogList.size(); i++) {
@@ -866,6 +850,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             showAlert("Error", "Delete Failed", "An error occurred while deleting the account.");
             e.printStackTrace();
         }
+        ClearFields();
     }
 
     @FXML
