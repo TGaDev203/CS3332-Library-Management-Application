@@ -413,10 +413,33 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (checkStringNotNULL("Publisher", managerBook_publisherField)) {
             publisher = managerBook_publisherField.getText();
         }
+        // Date public
         LocalDate selectedDate = managerBook_date.getValue();
-        Date publicationDate = Date.valueOf(selectedDate);
+        Date publicationDate = null;
+        if (selectedDate != null) {
+            // Chuyển đổi LocalDate sang java.sql.Date
+            publicationDate = Date.valueOf(selectedDate);
+
+            // Tiếp tục xử lý với publicationDate
+            // ...
+        } else {
+            // Hiển thị thông báo lỗi nếu selectedDate là null
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose a publication date.");
+            alert.showAndWait();
+        }
 
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        if (BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
         if (BookEntity.IsExisted(newBook)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -438,10 +461,15 @@ public class FXMLDashBoardConstroller implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     // Set value for comboBox
     private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().clear();
         comboBox.getItems().addAll("None");
         for (int i = 0; i < catalogList.size(); i++) {
             comboBox.getItems().addAll(catalogList.get(i));
@@ -616,6 +644,10 @@ public class FXMLDashBoardConstroller implements Initializable {
         } else {
             System.out.println("Selected book is null");
         }
+        // Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     @FXML
@@ -917,6 +949,28 @@ public class FXMLDashBoardConstroller implements Initializable {
         return isValidAccountId && isValidPhoneNumber && isValidEmailAddress && isValidPassword;
     }
 
+    private boolean isTextFieldLocked = false;
+
+    private void LockTextFieldWithTooltip(TextField textField) {
+        isTextFieldLocked = true;
+
+        textField.setEditable(false);
+
+        Tooltip tooltip = new Tooltip("Cannot edit Account ID for security reasons.");
+
+        tooltip.setStyle(
+                "-fx-font-size: 14px; -fx-text-fill: #fff; -fx-background-color: #000; -fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;");
+
+        textField.setOnMouseEntered(event -> {
+            if (isTextFieldLocked) {
+                Bounds boundsInScreen = textField.localToScreen(textField.getBoundsInLocal());
+                tooltip.show(textField, boundsInScreen.getMinX(), boundsInScreen.getMinY() - 50);
+            }
+        });
+
+        textField.setOnMouseExited(event -> tooltip.hide());
+    }
+
     @FXML
     private void ClearFields() {
         account_accountID.clear();
@@ -924,23 +978,11 @@ public class FXMLDashBoardConstroller implements Initializable {
         account_emailAddress.clear();
         account_phoneNumber.clear();
         account_password.clear();
+        if (isTextFieldLocked) {
+            account_accountID.setEditable(true);
+            account_accountID.setOnMouseEntered(null);
+            account_accountID.setOnMouseExited(null);
+            isTextFieldLocked = false;
+        }
     }
-
-    private void LockTextFieldWithTooltip(TextField textField) {
-        textField.setEditable(false);
-
-        Tooltip tooltip = new Tooltip("Cannot edit Account ID for security reasons.");
-
-        // Tạo CSS cho tooltip
-        tooltip.setStyle(
-                "-fx-font-size: 14px; -fx-text-fill: #fff; -fx-background-color: #000; -fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 1px;");
-
-        textField.setOnMouseEntered(event -> {
-            Bounds boundsInScreen = textField.localToScreen(textField.getBoundsInLocal());
-            tooltip.show(textField, boundsInScreen.getMinX(), boundsInScreen.getMinY() - 50);
-        });
-
-        textField.setOnMouseExited(event -> tooltip.hide());
-    }
-
 }
