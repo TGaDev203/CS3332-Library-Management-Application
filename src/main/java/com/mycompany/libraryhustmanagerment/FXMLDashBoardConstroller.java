@@ -413,10 +413,33 @@ public class FXMLDashBoardConstroller implements Initializable {
         if (checkStringNotNULL("Publisher", managerBook_publisherField)) {
             publisher = managerBook_publisherField.getText();
         }
+        // Date public
         LocalDate selectedDate = managerBook_date.getValue();
-        Date publicationDate = Date.valueOf(selectedDate);
-
+        Date publicationDate = null;
+        if (selectedDate != null) {
+        // Chuyển đổi LocalDate sang java.sql.Date
+        publicationDate = Date.valueOf(selectedDate);
+        
+        // Tiếp tục xử lý với publicationDate
+        // ...
+        } else {
+        // Hiển thị thông báo lỗi nếu selectedDate là null
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose a publication date.");
+            alert.showAndWait();
+        }
+        
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        if(BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
         if (BookEntity.IsExisted(newBook)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -438,17 +461,22 @@ public class FXMLDashBoardConstroller implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDashBoardConstroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     // Set value for comboBox
     private void SetValueForComboBox(ComboBox<String> comboBox, List<String> catalogList, String model) {
+        comboBox.getItems().clear();
         comboBox.getItems().addAll("None");
         for (int i = 0; i < catalogList.size(); i++) {
             comboBox.getItems().addAll(catalogList.get(i));
         }
         comboBox.getSelectionModel().select(model);
     }
-
+    
     // Set value for BookTitles combobox
     private void SetValueForBookTitlesCatalog() {
         List<String> titleCatalogList = CatalogEntity.GetBookTitleList();
@@ -616,6 +644,10 @@ public class FXMLDashBoardConstroller implements Initializable {
         } else {
             System.out.println("Selected book is null");
         }
+        //Update Catalog
+        SetValueForBookTitlesCatalog();
+        SetValueForBookGenreCatalog();
+        SetValueForBookAuthorCatalog();
     }
 
     @FXML

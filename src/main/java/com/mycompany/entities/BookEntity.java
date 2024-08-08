@@ -44,12 +44,12 @@ public class BookEntity extends BaseEntity {
             close();
         }
     }
-
     public static boolean IsExisted(Book newBook) {
         open();
         ResultSet resultSet = null;
         try {
             // Mở kết nối
+            
 
             // Truy vấn kiểm tra sự tồn tại của quyển sách
             String query = "SELECT COUNT(*) FROM book WHERE title = ? AND author = ? AND genre = ? AND publisher = ? AND publicationDate = ?";
@@ -58,7 +58,7 @@ public class BookEntity extends BaseEntity {
             statement.setString(2, newBook.getBookAuthor());
             statement.setString(3, newBook.getGenre());
             statement.setString(4, newBook.getPublisher());
-            statement.setDate(5, new Date(newBook.getPublicationDate().getTime()));
+            statement.setDate(5,new Date(newBook.getPublicationDate().getTime()));
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
@@ -69,19 +69,15 @@ public class BookEntity extends BaseEntity {
         } finally {
             // Đóng kết nối và tài nguyên
             try {
-                if (resultSet != null)
-                    resultSet.close();
-                if (statement != null)
-                    statement.close();
-                if (conn != null)
-                    conn.close();
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (conn != null) conn.close();
             } catch (SQLException e) {
                 Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         return false;
     }
-
     // Get All Data of Book
     public static ObservableList<Book> GetDataBooks() throws SQLException {
         open();

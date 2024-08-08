@@ -52,7 +52,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" />
                </graphic>
             </Button>
-            <Button fx:id="signup_minimize" layoutX="658.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
+            <Button fx:id="signup_minimize" layoutX="655.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                </graphic>
