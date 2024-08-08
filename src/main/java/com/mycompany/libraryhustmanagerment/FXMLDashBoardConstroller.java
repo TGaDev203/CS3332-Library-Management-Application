@@ -417,6 +417,14 @@ public class FXMLDashBoardConstroller implements Initializable {
         Date publicationDate = Date.valueOf(selectedDate);
 
         Book newBook = new Book(bookTitle, genre, bookAuthor, stock, stock, publisher, publicationDate);
+        if (BookEntity.IsExisted(newBook)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book is exitsted.");
+            alert.showAndWait();
+            return;
+        }
         BookEntity.AddBook(newBook);
         showAlert("Success!", "Book is added successfully!", "Book added is: " + newBook.getBookTitle());
         managerBook_bookTitle.clear();
@@ -868,6 +876,7 @@ public class FXMLDashBoardConstroller implements Initializable {
             showAlert("Error", "Invalid ID", "Please enter a valid numeric account ID.");
             e.printStackTrace();
         }
+        LockTextFieldWithTooltip(account_accountID);
     }
 
     private boolean ValidateAccountFields() {
