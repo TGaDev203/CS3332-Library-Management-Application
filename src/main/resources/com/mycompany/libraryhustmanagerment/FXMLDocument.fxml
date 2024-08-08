@@ -53,6 +53,7 @@
                </graphic>
             </Button>
             <Button fx:id="signup_minimize" layoutX="655.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
+            <Button fx:id="signup_minimize" layoutX="655.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_minimize" prefHeight="26.0" prefWidth="61.0" styleClass="minimize" stylesheets="@LoginDesign.css">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                </graphic>
@@ -76,6 +77,7 @@
             <FontAwesomeIconView fill="#f40000" glyphName="USER_PLUS" layoutX="354.0" layoutY="99.0" size="7em" text="" />
             <TextField fx:id="signup_emailAddress" alignment="BOTTOM_CENTER" layoutX="268.0" layoutY="313.0" prefHeight="30.0" prefWidth="270.0" promptText="Email Address (Hust)" styleClass="textFill" stylesheets="@LoginDesign.css" />
             <TextField fx:id="signup_name" alignment="BOTTOM_CENTER" layoutX="266.0" layoutY="230.0" prefHeight="30.0" prefWidth="270.0" promptText="Name" styleClass="textFill" stylesheets="@LoginDesign.css" />
+            </Button>
          </children>
          <styleClass>
             <String fx:value="bg-form" />
