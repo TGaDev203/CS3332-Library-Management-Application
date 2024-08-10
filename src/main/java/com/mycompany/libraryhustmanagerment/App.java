@@ -19,13 +19,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = loadFXML("FXMLDocument");
-//        Parent root = loadFXML("dashboard");
         scene = new Scene(root);
+        // assdsa
 
         stage.initStyle(StageStyle.TRANSPARENT);
 
         stage.setScene(scene);
         stage.show();
+        // System.out.println(GetAccountLogin().GetRole());
     }
 
     static void setRoot(String fxml) throws IOException {
