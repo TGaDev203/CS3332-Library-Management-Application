@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Book;
-
 /**
  *
  * @author Legion
@@ -48,10 +47,7 @@ public class BookEntity extends BaseEntity {
         open();
         ResultSet resultSet = null;
         try {
-            // Mở kết nối
-            
 
-            // Truy vấn kiểm tra sự tồn tại của quyển sách
             String query = "SELECT COUNT(*) FROM book WHERE title = ? AND author = ? AND genre = ? AND publisher = ? AND publicationDate = ?";
             statement = conn.prepareStatement(query);
             statement.setString(1, newBook.getBookTitle());
@@ -381,4 +377,60 @@ public class BookEntity extends BaseEntity {
         return dataBook;
     }
 
+    // Update number of available books after borrow
+    public static void UpdateBorrowAvailBook(Book book) {
+        open();
+
+        try {
+            String sql = "UPDATE Book SET availLeft = ? WHERE bookID = ?";
+            statement = conn.prepareStatement(sql);
+
+            book.setAvailBook(book.getAvailBook() - 1);
+            statement.setInt(1, book.getAvailBook());
+            statement.setInt(2, book.getBookID());
+
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+    }
+
+    // Update number of available books after reuturn
+    public static void UpdateReturnAvailBook(Integer bookID, Integer availLeft) {
+        open();
+
+        try {
+            String sql = "UPDATE Book SET availLeft = ? WHERE bookID = ?";
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, availLeft + 1);
+            statement.setInt(2, bookID);
+
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static Integer getAvailLeftFromID(Integer bookID) {
+        open();
+        Integer availLeft = null;
+        try {
+            String sql = "SELECT availLeft FROM book WHERE bookID = ?";
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, bookID);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                availLeft = rs.getInt("availLeft");
+            } else {
+                Logger.getLogger(BookEntity.class.getName()).log(Level.WARNING, "No book found with bookID: " + bookID);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BookEntity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return availLeft;
+    }
 }
