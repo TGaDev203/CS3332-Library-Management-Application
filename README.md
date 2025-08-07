@@ -1,71 +1,65 @@
-# CS3332-Library-Management-Application
+# CS3332 Library Management Application
 
-## Project Overview
+## 📚 Project Overview
 
-Library-Management-Application is a comprehensive library management system developed using JavaFX and Maven. This application is designed to streamline library operations, providing an efficient way to manage books and users effectively.
+**CS3332 Library Management Application** is a comprehensive desktop-based system developed using **JavaFX** and **Maven**. It is designed to streamline library operations and provide an efficient way to manage books, users, and borrowing activities.
 
-## Key Features
+---
 
-### User Management
-- Secure login system for users and admins.
-- User profiles and account management.
-- Different roles with distinct permissions.
+## ✨ Key Features
 
-### Book Management
-- Add, update, and delete book records (admin only).
+### 👤 User Management
+- Secure login for both users and admins.
+- Role-based access control with different permissions.
+- Manage user profiles and accounts.
+
+### 📖 Book Management
+- Admins can add, update, or delete books.
 - View detailed information about each book.
 - Categorize books by genre, author, and publication year.
-- Track book status and availability.
+- Track book availability and status.
 
-### Borrow and Return Books
-- Users can borrow available books.
-- Users can return borrowed books.
-- Monitor due dates and manage overdue fines.
+### 🔄 Borrowing System
+- Users can borrow and return books.
+- Tracks due dates and calculates overdue fines.
 
-### Book Information and Status
-- View detailed information about each book, including author, genre, and publication year.
-- Check the availability and status of books (e.g., available, borrowed, reserved).
+### 🔍 Search and Filtering
+- Search by title, author, or ISBN.
+- Filter books based on genre, status, and more.
 
-### Search and Filtering
-- Powerful search functionality to find books by title, author, or ISBN.
-- Advanced filtering options to refine search results.
+### 🔔 Notifications
+- In-app and email notifications for:
+  - Upcoming due dates
+  - Book reservations
+  - Library announcements
 
-### Notifications
-- Email and in-app notifications for due dates, reservations, and library announcements.
+---
 
-## Technology Stack
+## 🧰 Technology Stack
 
-- **JavaFX:** For building the user interface.
-- **Maven:** For project management and dependency management.
-- **PHP:** Server-side scripting.
-- **MySQL:** Database management.
+- **JavaFX** – for building the user interface.
+- **Maven** – for dependency and project management.
+- **MySQL** – for data storage.
+- **PHP (Localhost)** – for backend API services (e.g., login, database access).
 
-## Getting Started
+---
 
-### Prerequisites
+## 🚀 Getting Started
 
-- JDK 11 or higher
-- Apache Maven
-- MySQL server
-- PHP
+### ✅ Prerequisites
 
-### Installation
+Make sure you have the following installed:
 
-1. **Clone the Repository:**
+- [Java JDK 11+](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [Apache Maven](https://maven.apache.org/install.html)
+- [MySQL Server](https://dev.mysql.com/downloads/mysql/)
+- [XAMPP or PHP server](https://www.apachefriends.org/index.html) for running PHP locally
+
+---
+
+### 📦 Installation
+
+1. **Clone the Repository**
    ```sh
-   git clone https://github.com/Veicap/LibraryHustManagerment.git
-   cd LibraryHustManagerment
-   ```
-2. **Database Configuration:**
-   - Configure your MySQL database as required. Refer to the documentation for detailed instructions.
-
-3. **Install Maven Dependencies:**
-   ```sh
-   mvn install
-   ```
-
-4. Run the Application:
-
-   ```sh
-   mvn javafx:run
-   ```
+   git clone https://github.com/TGaDev203/CS3332-Library-Management-Application.git
+   cd CS3332-Library-Management-Application
